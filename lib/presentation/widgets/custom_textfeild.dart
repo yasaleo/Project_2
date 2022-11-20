@@ -11,7 +11,7 @@ class CustomTextfeild extends StatelessWidget {
     this.onchanged,
     this.controller,
   }) : super(key: key);
-  static const double strokethick = 2.5;
+
   final String hintText;
   final Widget icon;
   final FocusNode? focusnode;
@@ -34,9 +34,9 @@ class CustomTextfeild extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Constants.COLOR_WHITE,
                 border: Border.all(
-                  width: strokethick,
+                  width: Constants.STROKETHICK,
                 ),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: Constants().BORDERCURVE,
               ),
             ),
           ),
@@ -50,19 +50,25 @@ class CustomTextfeild extends StatelessWidget {
               controller: controller,
               focusNode: focusnode,
               decoration: InputDecoration(
+                  
                   hintText: hintText,
                   filled: true,
                   fillColor: Constants.COLOR_WHITE,
                   suffixIcon: icon,
+                  
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(
-                        width: strokethick, color: Constants.COLOR_BLACK),
+                      width: Constants.STROKETHICK,
+                      color: Constants.COLOR_BLACK,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(
-                        width: strokethick, color: Constants.COLOR_BLACK),
+                      width: Constants.STROKETHICK,
+                      color: Constants.COLOR_BLACK,
+                    ),
                   )),
             ),
           ),
