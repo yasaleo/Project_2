@@ -56,23 +56,34 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final desize = MediaQuery.of(context).size;
-    final keyboard = MediaQuery.of(context).viewInsets.bottom;
+    final viewinsects = EdgeInsets.fromWindowPadding(
+        WidgetsBinding.instance.window.viewInsets,
+        WidgetsBinding.instance.window.devicePixelRatio);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Constants.COLOR_BLUE,
-        centerTitle: true,
-        title: const TextBold(
-          content: "Login",
-          fontsize: 50,
-        ),
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   elevation: 10,
+      //   backgroundColor: Constants.COLOR_BLUE,
+      //   title: const TextBold(
+      //     content: "Hello",
+      //     fontsize: 50,
+      //   ),
+      // ),
       backgroundColor: Constants.COLOR_BLUE,
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
-              top: desize.height * 0 / 10,
-              right: desize.width * -01 / 10,
+              top: desize.height * -.1 / 10,
+              left: desize.width * 3.1 / 10,
+              child: const TextBold(
+                content: "Hello",
+                fontsize: 50,
+              ),
+            ),
+            Positioned(
+              top: desize.height * .5 / 10,
+              right: desize.width * -0.7 / 10,
               child: SizedBox(
                 height: 190,
                 width: 450,
@@ -80,6 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RiveAnimation.asset(
                     "assets/3287-6917-headless-bear.riv",
                     fit: BoxFit.cover,
+                    placeHolder: const CircularProgressIndicator(
+                      color: Constants.COLOR_BLACK,
+                      strokeWidth: Constants.STROKETHICK,
+                      value: .8,
+                    ),
                     stateMachines: const ["Login Machine"],
                     onInit: (artboard) {
                       smcontroller = StateMachineController.fromArtboard(
@@ -97,10 +113,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Positioned(
-              top: desize.height * 2.5 / 10,
-              left: desize.width * .22 / 10,
+              top: desize.height * 2.9 / 10,
+              left: desize.width * .18 / 10,
               child: NeubrutContainer(
-                height: desize.height * 2.65 / 10,
+                height: desize.height * 2.75 / 10,
                 width: desize.width * 9.6 / 10,
                 color: Constants.COLOR_BLUE,
                 child: ListView(
@@ -108,10 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   physics: const BouncingScrollPhysics(),
                   children: [
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     CustomTextfeild(
-                      hintText: "Enter your Email",
+                      heading: "Email",
+                      hintText: "eg:name123@gmail.com",
                       controller: emailcontroller,
                       icon: const Icon(
                         Ionicons.mail,
@@ -127,7 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 8,
                     ),
                     CustomTextfeild(
-                      hintText: "Enter your password",
+                      heading: "Password",
+                      hintText: "Enter a strong password",
                       controller: passwordcontroller,
                       focusnode: passwordFocusnode,
                       onchanged: (value) {},
@@ -137,14 +155,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Constants.COLOR_BLACK,
                       ),
                     ),
-                    Constants.HEIGHT50,
-                    Constants.HEIGHT30,
+                    viewinsects.bottom == 0
+                        ? Constants.HEIGHT10
+                        : SizedBox(
+                            height: viewinsects.bottom * 3 / 10,
+                          )
                   ],
                 ),
               ),
             ),
             Positioned(
-              top: desize.height * 6 / 10,
+              top: desize.height * 6.5 / 10,
               left: desize.width * 2.2 / 10,
               child: Column(
                 children: [
@@ -173,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Positioned(
-              top: desize.height * 7.8 / 10,
+              top: desize.height * 8.3 / 10,
               left: desize.width * 1 / 10,
               child: AnimatedButton(
                 width: desize.width * 8 / 10,
@@ -184,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   isHandsUp?.change(false);
                   trigFail?.change(true);
+                  // trigSuccess?.change(true);
                 },
               ),
             )

@@ -36,7 +36,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
           width: widget.width,
           curve: Curves.easeInOut,
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          duration: const Duration(milliseconds: 150),
+          duration: const Duration(milliseconds: 120),
           decoration: BoxDecoration(
               border: Border.all(width: Constants.STROKETHICK),
               color: Constants.COLOR_WHITE,
@@ -45,7 +45,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   ? [
                       const BoxShadow(
                         color: Constants.COLOR_BLACK,
-                        offset: Offset(5, 5),
+                        offset: Offset(6.5, 6.5),
                       ),
                     ]
                   : null),
