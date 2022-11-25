@@ -7,6 +7,8 @@ class Constants {
   static const COLOR_BLACK = Color.fromARGB(255, 0, 0, 0);
   static const COLOR_WHITE = Color.fromARGB(255, 255, 255, 255);
   static const COLOR_PINKISH = Color.fromARGB(255, 255, 212, 213);
+  static const COLOR_GREYISH = Color.fromARGB(255, 61, 61, 61);
+
 
   //
   static const double STROKETHICK = 2.9;

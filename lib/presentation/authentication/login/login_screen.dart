@@ -4,9 +4,7 @@ import 'package:project_2/presentation/authentication/signup/signup_screen.dart'
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/containers.dart';
 import 'package:rive/rive.dart';
-
 import 'package:project_2/presentation/constants/constants.dart';
-
 import '../../widgets/custom_textfeild.dart';
 import '../../widgets/text_widgets.dart';
 
@@ -60,24 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
         WidgetsBinding.instance.window.viewInsets,
         WidgetsBinding.instance.window.devicePixelRatio);
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   elevation: 10,
-      //   backgroundColor: Constants.COLOR_BLUE,
-      //   title: const TextBold(
-      //     content: "Hello",
-      //     fontsize: 50,
-      //   ),
-      // ),
       backgroundColor: Constants.COLOR_BLUE,
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
               top: desize.height * -.1 / 10,
-              left: desize.width * 3.1 / 10,
+              left: desize.width * 2.8 / 10,
               child: const TextBold(
-                content: "Hello",
+                content: "Hello!",
                 fontsize: 50,
               ),
             ),
@@ -158,7 +147,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     viewinsects.bottom == 0
                         ? Constants.HEIGHT10
                         : SizedBox(
-                            height: viewinsects.bottom * 3 / 10,
+                            height: viewinsects.bottom *
+                                (viewinsects.bottom / 160 ) /
+                                10,
                           )
                   ],
                 ),

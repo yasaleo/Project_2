@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/screens/homescreen/homescreen.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/custom_textfeild.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
-
 import '../../widgets/containers.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Constants.HEIGHT10,
                     const CustomTextfeild(
                       heading: "Name",
-                      hintText: "name eg: Alan Thomas",
+                      hintText: " eg: Alan Thomas",
                       icon: Icon(
                         Ionicons.person,
                         color: Constants.COLOR_BLACK,
@@ -87,7 +87,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     viewinsects.bottom == 0
                         ? Constants.HEIGHT10
                         : SizedBox(
-                            height: viewinsects.bottom * 3.8 / 10,
+                            height: viewinsects.bottom *
+                                (viewinsects.bottom / 110) /
+                                10,
                           )
                   ],
                 ),
@@ -99,7 +101,13 @@ class _SignupScreenState extends State<SignupScreen> {
               child: AnimatedButton(
                 width: desize.width * 8 / 10,
                 cwidget: const TextSemiBold(content: "Create"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                },
               ),
             )
           ],
