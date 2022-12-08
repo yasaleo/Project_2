@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_2/presentation/authentication/login/login_screen.dart';
-import 'package:project_2/presentation/screens/homescreen/homescreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           colorSchemeSeed: Colors.white,
           useMaterial3: true,
           fontFamily: 'Source Code Pro Regular'),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

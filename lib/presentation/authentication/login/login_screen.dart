@@ -43,6 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
   FocusNode passwordFocusnode = FocusNode();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  bool isObscure = true;
+  final formkey = GlobalKey<FormState>();
 
   StateMachineController? smcontroller;
   SMIInput<bool>? isChecking;
@@ -105,53 +107,80 @@ class _LoginScreenState extends State<LoginScreen> {
               top: desize.height * 2.9 / 10,
               left: desize.width * .18 / 10,
               child: NeubrutContainer(
-                height: desize.height * 2.75 / 10,
+                height: desize.height * 2.95 / 10,
                 width: desize.width * 9.6 / 10,
                 color: Constants.COLOR_BLUE,
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextfeild(
-                      heading: "Email",
-                      hintText: "eg:name123@gmail.com",
-                      controller: emailcontroller,
-                      icon: const Icon(
-                        Ionicons.mail,
-                        size: 28,
-                        color: Constants.COLOR_BLACK,
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: formkey,
+                  child: ListView(
+                    padding: const EdgeInsets.all(8),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                      focusnode: emailFocusnode,
-                      onchanged: (value) {
-                        numLook?.change(value.length.toDouble());
-                      },
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextfeild(
-                      heading: "Password",
-                      hintText: "Enter a strong password",
-                      controller: passwordcontroller,
-                      focusnode: passwordFocusnode,
-                      onchanged: (value) {},
-                      icon: const Icon(
-                        Ionicons.key,
-                        size: 28,
-                        color: Constants.COLOR_BLACK,
+                      CustomTextfeild(
+                        heading: "Email",
+                        hintText: "eg:name123@gmail.com",
+                        controller: emailcontroller,
+                        icon: const Icon(
+                          Ionicons.mail,
+                          size: 28,
+                          color: Constants.COLOR_BLACK,
+                        ),
+                        focusnode: emailFocusnode,
+                        onchanged: (value) {
+                          numLook?.change(value!.length.toDouble());
+                        },
+                        validator: (value) {
+                          if (value.isEmpty ||
+                              !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                            return "Enter a valid email";
+                          }
+                        },
                       ),
-                    ),
-                    viewinsects.bottom == 0
-                        ? Constants.HEIGHT10
-                        : SizedBox(
-                            height: viewinsects.bottom *
-                                (viewinsects.bottom / 160 ) /
-                                10,
-                          )
-                  ],
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      CustomTextfeild(
+                        obscureText: isObscure,
+                        heading: "Password",
+                        hintText: "Enter a strong password",
+                        controller: passwordcontroller,
+                        focusnode: passwordFocusnode,
+                        onchanged: (value) {},
+                        icon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isObscure = !isObscure;
+                              isHandsUp!.change(isObscure);
+                            });
+                          },
+                          child: Icon(
+                            isObscure
+                                ? Ionicons.eye_off_outline
+                                : Ionicons.eye_outline,
+                            size: 28,
+                            color: Constants.COLOR_BLACK,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty || value.length < 6) {
+                            return "contains atleast 6 charcters";
+                          }
+                        },
+                      ),
+                      viewinsects.bottom == 0
+                          ? const SizedBox()
+                          : SizedBox(
+                              height: viewinsects.bottom *
+                                  (viewinsects.bottom / 160) /
+                                  10,
+                            )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -194,8 +223,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   size: 24,
                 ),
                 onTap: () {
+
+
+                  if (formkey.currentState!.validate()) {
                   isHandsUp?.change(false);
-                  trigFail?.change(true);
+
+                    trigSuccess!.change(true);
+                  } else {
+                  isHandsUp?.change(false);
+                  Future.delayed(const Duration(milliseconds: 200));
+
+                    trigFail?.change(true);
+                  }
+
                   // trigSuccess?.change(true);
                 },
               ),

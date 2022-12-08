@@ -8,6 +8,10 @@ class Constants {
   static const COLOR_WHITE = Color.fromARGB(255, 255, 255, 255);
   static const COLOR_PINKISH = Color.fromARGB(255, 255, 212, 213);
   static const COLOR_GREYISH = Color.fromARGB(255, 61, 61, 61);
+  static const COLOR_REDISH = Color.fromARGB(255, 129, 17, 17);
+  static const COLOR_GREENISH = Color.fromARGB(255, 8, 67, 6);
+
+
 
 
   //
