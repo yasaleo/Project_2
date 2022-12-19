@@ -202,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextButton.styleFrom(),
                     child: const TextSemiBold(
                       content: "Signup",
-                      size: 16,
+                      fontsize: 16,
                     ),
                   ),
                   Container(
@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: desize.width * 8 / 10,
                 cwidget: const TextSemiBold(
                   content: "Login",
-                  size: 24,
+                  fontsize: 24,
                 ),
                 onTap: () {
 

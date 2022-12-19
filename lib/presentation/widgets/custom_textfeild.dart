@@ -111,7 +111,7 @@ class CustomTextfeild extends StatelessWidget {
             left: 2,
             child: TextSemiBold(
               content: heading,
-              size: 17,
+              fontsize: 17,
             ),
           )
         ],

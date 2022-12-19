@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:project_2/dataLayer/model/signupmodel.dart';
 import 'package:project_2/presentation/constants/constants.dart';
-import 'package:project_2/presentation/screens/default/defaultscreen.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/custom_textfeild.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
+import '../../../dataLayer/auth_services.dart';
 import '../../widgets/containers.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -171,19 +172,25 @@ class _SignupScreenState extends State<SignupScreen> {
               child: AnimatedButton(
                 width: desize.width * 8 / 10,
                 cwidget: const TextSemiBold(content: "Create"),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const DefaultScreen(),
-                    ),
-                  );
-
-                  // Authsevices().register(
-                  //   email: "y@gmail.com",
-                  //   pasword: "1234876",
-                  //   firstname: "yadhu",
-                  //   lastname: "s"
+                onTap: () async {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const DefaultScreen(),
+                  //   ),
                   // );
+
+                  if (formkey.currentState!.validate()) {
+                  final respone = await  Authsevices().register(model: SignupModel(
+                      email: emailController.text,
+                      name: firstnameController.text,
+                      password: confirmpasswordController.text
+                    ),);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(respone!),
+                      ),
+                    );
+                  }
                 },
               ),
             )

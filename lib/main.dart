@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_2/presentation/authentication/login/login_screen.dart';
+import 'package:project_2/presentation/authentication/signup/otpscreen.dart';
 
 
 void main() {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           colorSchemeSeed: Colors.white,
           useMaterial3: true,
           fontFamily: 'Source Code Pro Regular'),
-      home: const LoginScreen(),
+      home: const OtpScreen(),
     );
   }
 }

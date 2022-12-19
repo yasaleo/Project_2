@@ -1,26 +1,20 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
+import 'package:project_2/dataLayer/model/response.dart';
+import 'package:project_2/dataLayer/model/signupmodel.dart';
 
 class Authsevices {
-  register({
-    required String email,
-    required String pasword,
-    required String firstname,
-    required String lastname,
-  }) async {
+  Future<String?> register({required SignupModel model}) async {
     try {
-      final response = await http
-          .post(Uri.parse('https://the-babble.ml/accounts/register/'), body: {
-        "first_name": firstname,
-        "last_name": lastname,
-        "email": email,
-        "password": pasword,
-      });
-      log(json.decode(response.body));
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:5000/api/v1/auth/register'),
+        body: model.toJson(),
+      );
+      print(response.body);
+      return SignupResponse().signupModelFromJson(response.body).message;
     } catch (e) {
-      log(e.toString());
+      rethrow;
+      // e;
+      // log(e.toString());
     }
   }
 }
