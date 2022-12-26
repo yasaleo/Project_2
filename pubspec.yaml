@@ -31,10 +31,12 @@ environment:
 dependencies:
   build_runner: ^2.3.2
   cupertino_icons: ^1.0.2
+  floating_bottom_navigation_bar: ^1.5.2
   flutter:
     sdk: flutter
   hive: ^2.2.3
   http: ^0.13.5
+  image_picker: ^0.8.6
   ionicons: ^0.2.1
   rive: ^0.9.1
 

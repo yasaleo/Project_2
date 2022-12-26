@@ -7,8 +7,10 @@ class SettingScreeen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.COLOR_BLACK,
+      backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+
         backgroundColor: Constants.COLOR_BLACK,
         title: const Text("Settings",style: TextStyle(
               color: Constants.COLOR_WHITE,

@@ -1,3 +1,4 @@
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/presentation/constants/constants.dart';
@@ -24,34 +25,16 @@ class _DefaultScreenState extends State<DefaultScreen> {
     return Scaffold(
       backgroundColor: Constants.COLOR_BLACK,
       body: buildBody(),
-      bottomNavigationBar: NavigationBar(
-        
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(
-              Ionicons.home,
-            ),
-            label: "Home",
-          ),
-          NavigationDestination(
-            icon: Icon(Ionicons.settings),
-            label: "settings",
-          ),NavigationDestination(
-            icon: Icon(
-              Ionicons.person,
-            ),
-            label: "profile",
-          ),
-          NavigationDestination(
-            icon: Icon(
-              Ionicons.menu,
-            ),
-            label: "event",
-          ),
+      extendBody: true,
+      bottomNavigationBar: FloatingNavbar(
+        onTap: ontap,
+        currentIndex: selectedindex,
+        items: [
+          FloatingNavbarItem(icon: Icons.home, title: 'Home'),
+          FloatingNavbarItem(icon: Ionicons.add_circle, title: 'Post'),
+          FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chats'),
+          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
         ],
-          onDestinationSelected: ontap,
-          selectedIndex: selectedindex,
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
       ),
     );
   }
@@ -59,11 +42,11 @@ class _DefaultScreenState extends State<DefaultScreen> {
   Widget buildBody() {
     switch (selectedindex) {
       case 1:
-        return const SettingScreeen();
+        return const EventsScreen();
       case 2:
         return const ProfileScreen();
       case 3:
-        return const EventsScreen();
+        return const SettingScreeen();
 
       case 0:
       default:

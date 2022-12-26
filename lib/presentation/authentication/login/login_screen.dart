@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:project_2/dataLayer/auth_services.dart';
 import 'package:project_2/presentation/authentication/signup/signup_screen.dart';
+import 'package:project_2/presentation/screens/default/defaultscreen.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/containers.dart';
 import 'package:rive/rive.dart';
@@ -30,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
   passwordfocus() {
     isHandsUp?.change(passwordFocusnode.hasFocus);
   }
+
+
 
   @override
   void dispose() {
@@ -222,18 +226,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   content: "Login",
                   fontsize: 24,
                 ),
-                onTap: () {
-
-
+                onTap: () async {
+                  isHandsUp?.change(false);
                   if (formkey.currentState!.validate()) {
-                  isHandsUp?.change(false);
+                    // trigSuccess!.change(true);
 
-                    trigSuccess!.change(true);
-                  } else {
-                  isHandsUp?.change(false);
-                  Future.delayed(const Duration(milliseconds: 200));
-
-                    trigFail?.change(true);
+                    final code = await Authsevices().login(
+                      email: emailcontroller.text,
+                      password: passwordcontroller.text,
+                    );
+                    print(code);
+                    if (code == 200) {
+                      trigSuccess?.change(true);
+                      Future.delayed(
+                        const Duration(seconds: 4),
+                        () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DefaultScreen(),
+                        )),
+                      );
+                    }
+                    if (code == 401) {
+                      trigFail?.change(true);
+                    }
                   }
 
                   // trigSuccess?.change(true);

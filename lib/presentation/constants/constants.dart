@@ -6,6 +6,8 @@ class Constants {
   static const COLOR_BLUE = Color.fromARGB(255, 162, 229, 223);
   static const COLOR_BLACK = Color.fromARGB(255, 0, 0, 0);
   static const COLOR_SEMIBLACK = Color.fromARGB(150, 0, 0, 0);
+  static const COLOR_SCAFFOLD_BACKGROUND = Color.fromARGB(255, 0, 0, 0);
+
 
   static const COLOR_WHITE = Color.fromARGB(255, 255, 255, 255);
   static const COLOR_PINKISH = Color.fromARGB(255, 255, 212, 213);
@@ -45,4 +47,20 @@ class Constants {
 
 
   BorderRadiusGeometry BORDERCURVE = BorderRadius.circular(8);
+  //loading widget
+  showLoading(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      barrierColor: Colors.black12,
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Constants.COLOR_WHITE,
+            strokeWidth: 7,
+          ),
+        );
+      },
+    );
+  }
 }

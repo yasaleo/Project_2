@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/dataLayer/model/signupmodel.dart';
@@ -180,16 +182,26 @@ class _SignupScreenState extends State<SignupScreen> {
                   // );
 
                   if (formkey.currentState!.validate()) {
-                  final respone = await  Authsevices().register(model: SignupModel(
-                      email: emailController.text,
-                      name: firstnameController.text,
-                      password: confirmpasswordController.text
-                    ),);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(respone!),
-                      ),
-                    );
+                    final respone = await Authsevices().register(
+                        model: SignupModel(
+                            email: emailController.text,
+                            name: firstnameController.text,
+                            password: confirmpasswordController.text),
+                        context: context);
+                    if (respone == 201) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Otp has been send to your email'),
+                        ),
+                      );
+                    }
+                    if (respone == 403) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('email already registered'),
+                        ),
+                      );
+                    }
                   }
                 },
               ),
