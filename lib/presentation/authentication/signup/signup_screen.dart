@@ -9,6 +9,7 @@ import 'package:project_2/presentation/widgets/custom_textfeild.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 import '../../../dataLayer/auth_services.dart';
 import '../../widgets/containers.dart';
+import 'otpscreen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -192,6 +193,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Otp has been send to your email'),
+                        ),
+                        
+                      );
+
+                       Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => OtpScreen(email: emailController.text),
                         ),
                       );
                     }

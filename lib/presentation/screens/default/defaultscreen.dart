@@ -31,9 +31,9 @@ class _DefaultScreenState extends State<DefaultScreen> {
         currentIndex: selectedindex,
         items: [
           FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-          FloatingNavbarItem(icon: Ionicons.add_circle, title: 'Post'),
+          FloatingNavbarItem(icon: Ionicons.notifications, title: 'events'),
           FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chats'),
-          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+          FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
         ],
       ),
     );
@@ -44,9 +44,9 @@ class _DefaultScreenState extends State<DefaultScreen> {
       case 1:
         return const EventsScreen();
       case 2:
-        return const ProfileScreen();
-      case 3:
         return const SettingScreeen();
+      case 3:
+        return const ProfileScreen();
 
       case 0:
       default:

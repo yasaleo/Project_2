@@ -8,7 +8,6 @@ class Constants {
   static const COLOR_SEMIBLACK = Color.fromARGB(150, 0, 0, 0);
   static const COLOR_SCAFFOLD_BACKGROUND = Color.fromARGB(255, 0, 0, 0);
 
-
   static const COLOR_WHITE = Color.fromARGB(255, 255, 255, 255);
   static const COLOR_PINKISH = Color.fromARGB(255, 255, 212, 213);
   static const COLOR_GREYISH = Color.fromARGB(255, 61, 61, 61);
@@ -32,7 +31,7 @@ class Constants {
   );
 
   //
-    static const WIDTH10 = SizedBox(
+  static const WIDTH10 = SizedBox(
     width: 10,
   );
   static const WIDTH20 = SizedBox(
@@ -44,10 +43,15 @@ class Constants {
   static const WIDTH50 = SizedBox(
     width: 50,
   );
+  //______________________Acess Token___________________________
+   String ACCESSTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI0MDI1NTAsImV4cCI6MTY3MjQ4ODk1MH0.AN2XfQshUpj75v-pXCTcrRJWS0Zhw7ns2L_JDNl1oeA";
 
+  //_________________border CUrve_____________________________________
 
   BorderRadiusGeometry BORDERCURVE = BorderRadius.circular(8);
-  //loading widget
+
+
+  //______________________________loading widget__________________________
   showLoading(BuildContext context) {
     showDialog(
       barrierDismissible: false,

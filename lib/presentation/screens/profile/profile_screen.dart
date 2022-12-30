@@ -17,11 +17,11 @@ class ProfileScreen extends StatelessWidget {
               color: Constants.COLOR_WHITE,
             )),
       ),
-      body: const Center(
-          child: Text("Profile",
-              style: TextStyle(
-                color: Constants.COLOR_WHITE,
-              ))),
+      body: Column(
+        children: [
+          
+        ],
+      ),
     );
   }
 }

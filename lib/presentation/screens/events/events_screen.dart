@@ -21,6 +21,7 @@ class _EventsScreenState extends State<EventsScreen> {
       backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       ),
       body: Center(
         child: ListView.separated(

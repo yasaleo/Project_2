@@ -15,6 +15,7 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
+  TextEditingController captionController = TextEditingController();
   File? finalImage;
   @override
   Widget build(BuildContext context) {
@@ -23,10 +24,12 @@ class _AddPostState extends State<AddPost> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.COLOR_BLACK,
-        title: const Text("Events",
-            style: TextStyle(
-              color: Constants.COLOR_WHITE,
-            )),
+        title: const Text(
+          "Add Post",
+          style: TextStyle(
+            color: Constants.COLOR_WHITE,
+          ),
+        ),
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -36,7 +39,7 @@ class _AddPostState extends State<AddPost> {
             onPressed: () async {
               if (finalImage != null) {
                 await Authsevices()
-                    .createPost("test 17: 31", finalImage!, context);
+                    .createPost(captionController.text, finalImage!, context);
                 Navigator.pop(context);
               } else {}
             },
@@ -50,7 +53,10 @@ class _AddPostState extends State<AddPost> {
       backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       body: Center(
         child: Column(
-          children: [captionFeild(desize), imageFeild(desize)],
+          children: [
+            captionFeild(desize),
+            imageFeild(desize),
+          ],
         ),
       ),
     );
@@ -68,7 +74,6 @@ class _AddPostState extends State<AddPost> {
                 size: desize.height * 3 / 10,
               )
             : Image.file(
-                
                 finalImage!,
                 fit: BoxFit.fill,
                 height: desize.height * 3 / 10,
@@ -83,7 +88,11 @@ class _AddPostState extends State<AddPost> {
         child: SizedBox(
           width: desize.width * 7 / 10,
           child: TextFormField(
-            style: const TextStyle(color: Constants.COLOR_WHITE),
+            controller: captionController,
+            style: const TextStyle(
+              color: Constants.COLOR_WHITE,
+              fontWeight: FontWeight.w600,
+            ),
             cursorColor: Constants.COLOR_WHITE,
             decoration: const InputDecoration(
               hintText: "enter here ...",
@@ -101,10 +110,10 @@ class _AddPostState extends State<AddPost> {
     );
   }
 
-  Future pickImage() async { 
+  Future pickImage() async {
     Constants().showLoading(context);
     final imagepath =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery,imageQuality: 20);
     if (imagepath == null) {
       return;
     } else {

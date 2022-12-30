@@ -1,13 +1,27 @@
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:project_2/dataLayer/auth_services.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/screens/add_post/add_post.dart';
+import 'package:project_2/presentation/widgets/post_card_widget.dart';
+import 'package:rive/rive.dart';
+import '../../../dataLayer/model/get_post_model.dart';
+import '../../widgets/shimmer_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<GetPostModel> postLists = [];
+  final double offsetTArmed = 220;
+  @override
   Widget build(BuildContext context) {
+    // final desize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       appBar: AppBar(
@@ -21,41 +35,113 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           TextButton.icon(
-              style: TextButton.styleFrom(
-                foregroundColor: Constants.COLOR_WHITE,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AddPost(),
-                  ),
-                );
-              },
-              icon: const Icon(Ionicons.add_circle_outline),
-              label: const Text("Post"))
+            style: TextButton.styleFrom(
+              foregroundColor: Constants.COLOR_WHITE,
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddPost(),
+                ),
+              );
+            },
+            icon: const Icon(Ionicons.add_circle_outline),
+            label: const Text("Post"),
+          )
         ],
       ),
-      body: Center(
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            return Container(
-              height: 200,
-              width: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                      "http://res.cloudinary.com/dyhk7g1gq/image/upload/v1671544368/t2lpmmuvjowmpwtvzduj.png"),
+      body: customRefresh(),
+    );
+  }
+
+  CustomRefreshIndicator customRefresh() {
+    return CustomRefreshIndicator(
+      leadingScrollIndicatorVisible: true,
+      onRefresh: refresh,
+      builder: (context, child, controller) => AnimatedBuilder(
+        animation: controller,
+        child: child,
+        builder: (context, child) {
+          return Padding(
+            padding: const EdgeInsets.all(3),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  decoration: const BoxDecoration(
+                    color: Constants.COLOR_BLACK,
+                  ),
+                  width: double.infinity,
+                  height: offsetTArmed * controller.value,
+                  child: ClipRRect(
+                    borderRadius: Constants().BORDERCURVE,
+                    child: const RiveAnimation.asset(
+                      'assets/pull-to-refresh.riv',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                color: Constants.COLOR_GREENISH,
-              ),
-            );
-          },
-          itemCount: 20,
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider();
-          },
-        ),
+                Center(
+                  child: Transform.translate(
+                    offset: Offset(
+                      0.0,
+                      offsetTArmed * controller.value,
+                    ),
+                    child: child,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
+      offsetToArmed: offsetTArmed,
+      child: postView(),
+    );
+  }
+
+  Future refresh() async {
+    final posts = await Authsevices().getAllUserPost();
+    setState(() {
+      postLists = posts;
+    });
+  }
+
+  FutureBuilder<List<GetPostModel>> postView() {
+    return FutureBuilder(
+      future: Authsevices().getAllUserPost(),
+      builder: (context, AsyncSnapshot<List<GetPostModel>> snapshot) {
+        if (snapshot.data == null) {
+          return const ShimmerWidget();
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const ShimmerWidget();
+        } else if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              postLists = snapshot.requireData;
+              final postDetails = postLists[index];
+              return PostCardWidget(
+                index: index,
+                userName: postDetails.userid!.name!,
+                caption: postDetails.caption!,
+                imageUrl: postDetails.image!,
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Constants.HEIGHT10;
+            },
+            itemCount: snapshot.data!.length,
+          );
+        } else {
+          return const CircularProgressIndicator(
+            color: Constants.COLOR_WHITE,
+            strokeWidth: 4,
+          );
+        }
+      },
     );
   }
 }

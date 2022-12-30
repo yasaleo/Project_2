@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_2/dataLayer/model/signupmodel.dart';
-import 'package:project_2/presentation/authentication/signup/otpscreen.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
+import 'model/get_post_model.dart';
+
 class Authsevices {
-  //register
-  Future<int> register({required SignupModel model, context}) async {
+  //__________________Register_____________________________________________
+  Future<int> register(
+      {required SignupModel model, required BuildContext context}) async {
     try {
       final response = await http.post(
         Uri.parse('http://10.0.2.2:5000/api/v1/auth/register'),
@@ -22,11 +24,12 @@ class Authsevices {
       final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
       await http.get(Uri.http('10.0.2.2:5000', '/api/v1/auth/otp', params),
           headers: headers);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => OtpScreen(email: model.email!),
-        ),
-      );
+
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => OtpScreen(email: model.email!),
+      //   ),
+      // );
 
       print(response.statusCode);
       return response.statusCode;
@@ -36,6 +39,7 @@ class Authsevices {
       // log(e.toString());
     }
   }
+  //__________________verify OTP_____________________________________________
 
   Future<int> verifyOtp({required String email, required String otp}) async {
     try {
@@ -48,6 +52,7 @@ class Authsevices {
       rethrow;
     }
   }
+  //__________________Login_____________________________________________
 
   Future<int> login({required String email, required String password}) async {
     try {
@@ -55,18 +60,19 @@ class Authsevices {
           Uri.parse('http://10.0.2.2:5000/api/v1/auth/login'),
           body: {"email": email, "password": password});
       print(response.statusCode);
-      return response.statusCode;
+      return response.statusCode; //register
+
     } catch (e) {
       rethrow;
     }
   }
+  //__________________Create POST_____________________________________________
 
   Future<void> createPost(
       String caption, File file, BuildContext context) async {
     Constants().showLoading(context);
     const postUrl = "http://10.0.2.2:5000/api/v1/post";
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzIwMzk2NzMsImV4cCI6MTY3MjEyNjA3M30.2F_uKiOOk0wIbD9thlrsGkln6ceUpWFKJdu2f5Rd0Lo";
+    final token = Constants().ACCESSTOKEN;
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
     };
@@ -83,7 +89,34 @@ class Authsevices {
       final response = await http.Response.fromStream(streamedResponse);
 
       log(response.statusCode.toString());
+
       Navigator.of(context).pop();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //__________________GET all POST_____________________________________________
+
+  Future<List<GetPostModel>> getAllUserPost() async {
+    final token = Constants().ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          'http://10.0.2.2:5000/api/v1/post',
+        ),
+        headers: headers,
+      );
+      log(response.statusCode.toString());
+      final post = GetPostModel().GetPostModelFromJson(response.body);
+
+      log(post.length.toString());
+
+      return GetPostModel().GetPostModelFromJson(response.body);
     } catch (e) {
       rethrow;
     }
