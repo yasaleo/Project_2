@@ -33,8 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
     isHandsUp?.change(passwordFocusnode.hasFocus);
   }
 
-
-
   @override
   void dispose() {
     emailFocusnode.removeListener(emailfocus());
@@ -231,23 +229,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (formkey.currentState!.validate()) {
                     // trigSuccess!.change(true);
 
-                    final code = await Authsevices().login(
+                    final userDetails = await Authsevices().login(
                       email: emailcontroller.text,
                       password: passwordcontroller.text,
+                      context: context
                     );
-                    print(code);
-                    if (code == 200) {
+                    try {
                       trigSuccess?.change(true);
+                      Constants.ACCESSTOKEN = userDetails.accessToken!;
                       Future.delayed(
                         const Duration(seconds: 4),
                         () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const DefaultScreen(),
                         )),
                       );
+                    } catch (e) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("wrong username or password")));
                     }
-                    if (code == 401) {
-                      trigFail?.change(true);
-                    }
+
+                    // if (code == 401) {
+                    //   trigFail?.change(true);
+                    // }
                   }
 
                   // trigSuccess?.change(true);

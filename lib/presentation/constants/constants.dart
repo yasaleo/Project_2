@@ -17,18 +17,16 @@ class Constants {
 
   //
   static const double STROKETHICK = 2.9;
-  static const HEIGHT10 = SizedBox(
-    height: 10,
-  );
-  static const HEIGHT20 = SizedBox(
-    height: 20,
-  );
-  static const HEIGHT30 = SizedBox(
-    height: 30,
-  );
-  static const HEIGHT50 = SizedBox(
-    height: 50,
-  );
+  //------------textStyle____________________
+  static const TEXTSTYLE_WHITE = TextStyle(color: Constants.COLOR_WHITE);
+  static const TEXTSTYLE_BLACK = TextStyle(color: Constants.COLOR_BLACK);
+
+
+//__________SIZEDBOX________________________
+  static const HEIGHT10 = SizedBox(height: 10);
+  static const HEIGHT20 = SizedBox(height: 20);
+  static const HEIGHT30 = SizedBox(height: 30);
+  static const HEIGHT50 = SizedBox(height: 50);
 
   //
   static const WIDTH10 = SizedBox(
@@ -44,14 +42,13 @@ class Constants {
     width: 50,
   );
   //______________________Acess Token___________________________
-   String ACCESSTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI0MDI1NTAsImV4cCI6MTY3MjQ4ODk1MH0.AN2XfQshUpj75v-pXCTcrRJWS0Zhw7ns2L_JDNl1oeA";
+  static  String ACCESSTOKEN ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI2NzYzMjUsImV4cCI6MTY3Mjc2MjcyNX0.EBa3Q5menIUfHrfbxMfUrMfv1Tp37Curu8mg27cTSnU';
 
   //_________________border CUrve_____________________________________
 
   BorderRadiusGeometry BORDERCURVE = BorderRadius.circular(8);
 
-
-  //______________________________loading widget__________________________
+  //______________________loading widget__________________________
   showLoading(BuildContext context) {
     showDialog(
       barrierDismissible: false,

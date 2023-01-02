@@ -3,18 +3,24 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:project_2/dataLayer/model/logged_user_details.dart';
+import 'package:project_2/dataLayer/model/login_response_model.dart';
 import 'package:project_2/dataLayer/model/signupmodel.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
 import 'model/get_post_model.dart';
 
 class Authsevices {
+  final String baseUrl = 'http://172.16.1.253:5000/api/v1';
   //__________________Register_____________________________________________
-  Future<int> register(
-      {required SignupModel model, required BuildContext context}) async {
+  Future<int> register({
+    required SignupModel model,
+    required BuildContext context,
+  }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:5000/api/v1/auth/register'),
+        Uri.parse('$baseUrl/auth/register'),
         body: model.toJson(),
       );
 
@@ -33,7 +39,8 @@ class Authsevices {
 
       print(response.statusCode);
       return response.statusCode;
-    } catch (e) {
+    } on SocketException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
       rethrow;
       // e;
       // log(e.toString());
@@ -41,10 +48,12 @@ class Authsevices {
   }
   //__________________verify OTP_____________________________________________
 
-  Future<int> verifyOtp({required String email, required String otp}) async {
+  Future<int> verifyOtp({
+    required String email,
+    required String otp,
+  }) async {
     try {
-      final response = await http.post(
-          Uri.parse('http://10.0.2.2:5000/api/v1/auth/otp'),
+      final response = await http.post(Uri.parse('$baseUrl/auth/otp'),
           body: {"email": email, "otp": otp});
       print(response.statusCode);
       return response.statusCode;
@@ -54,15 +63,27 @@ class Authsevices {
   }
   //__________________Login_____________________________________________
 
-  Future<int> login({required String email, required String password}) async {
+  Future<LoginResponse> login(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     try {
-      final response = await http.post(
-          Uri.parse('http://10.0.2.2:5000/api/v1/auth/login'),
+      final response = await http.post(Uri.parse('$baseUrl/auth/login'),
           body: {"email": email, "password": password});
-      print(response.statusCode);
-      return response.statusCode; //register
+      final userDetails = LoginResponse().loginResponseFromJson(response.body);
+      log(response.statusCode.toString());
+      // log(userDetails.user!.email.toString());
+      return userDetails; //register
 
-    } catch (e) {
+    } on SocketException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
+      rethrow;
+    } on HttpException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
+      rethrow;
+    } on ClientException catch (e) {
+      log("client caught ");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
       rethrow;
     }
   }
@@ -71,8 +92,8 @@ class Authsevices {
   Future<void> createPost(
       String caption, File file, BuildContext context) async {
     Constants().showLoading(context);
-    const postUrl = "http://10.0.2.2:5000/api/v1/post";
-    final token = Constants().ACCESSTOKEN;
+    final postUrl = "$baseUrl/post";
+    final token = Constants.ACCESSTOKEN;
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
     };
@@ -99,7 +120,7 @@ class Authsevices {
   //__________________GET all POST_____________________________________________
 
   Future<List<GetPostModel>> getAllUserPost() async {
-    final token = Constants().ACCESSTOKEN;
+    final token = Constants.ACCESSTOKEN;
 
     Map<String, String>? headers = {
       "Authorization": "Bearer $token",
@@ -107,7 +128,7 @@ class Authsevices {
     try {
       final response = await http.get(
         Uri.parse(
-          'http://10.0.2.2:5000/api/v1/post',
+          '$baseUrl/post',
         ),
         headers: headers,
       );
@@ -117,6 +138,31 @@ class Authsevices {
       log(post.length.toString());
 
       return GetPostModel().GetPostModelFromJson(response.body);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LoggedUserDetails> getLoggedUserDetails() async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '$baseUrl/profile',
+        ),
+        headers: headers,
+      );
+      log(response.statusCode.toString());
+      final details =
+          LoggedUserDetails().loggedUserDetailsFromJson(response.body);
+
+      log(details.email.toString());
+
+      return details;
     } catch (e) {
       rethrow;
     }

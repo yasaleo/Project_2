@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return const ShimmerWidget();
         } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
-          return ListView.separated(
+          return ListView.builder(
             itemBuilder: (context, index) {
               postLists = snapshot.requireData;
               final postDetails = postLists[index];
@@ -130,9 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 imageUrl: postDetails.image!,
               );
             },
-            separatorBuilder: (context, index) {
-              return Constants.HEIGHT10;
-            },
+           
             itemCount: snapshot.data!.length,
           );
         } else {

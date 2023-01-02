@@ -64,20 +64,21 @@ class _AddPostState extends State<AddPost> {
 
   Widget imageFeild(Size desize) {
     return GestureDetector(
-        onTap: () {
-          pickImage();
-        },
-        child: finalImage == null
-            ? Icon(
-                Ionicons.image_outline,
-                color: Constants.COLOR_WHITE,
-                size: desize.height * 3 / 10,
-              )
-            : Image.file(
-                finalImage!,
-                fit: BoxFit.fill,
-                height: desize.height * 3 / 10,
-              ));
+      onTap: () {
+        pickImage();
+      },
+      child: finalImage == null
+          ? Icon(
+              Ionicons.image_outline,
+              color: Constants.COLOR_WHITE,
+              size: desize.height * 3 / 10,
+            )
+          : Image.file(
+              finalImage!,
+              fit: BoxFit.fill,
+              height: desize.height * 3 / 10,
+            ),
+    );
   }
 
   Align captionFeild(Size desize) {
@@ -112,8 +113,8 @@ class _AddPostState extends State<AddPost> {
 
   Future pickImage() async {
     Constants().showLoading(context);
-    final imagepath =
-        await ImagePicker().pickImage(source: ImageSource.gallery,imageQuality: 20);
+    final imagepath = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (imagepath == null) {
       return;
     } else {
