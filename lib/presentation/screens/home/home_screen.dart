@@ -1,7 +1,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/dataLayer/auth_services.dart';
+import 'package:project_2/dataLayer/repositories.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/screens/add_post/add_post.dart';
 import 'package:project_2/presentation/widgets/post_card_widget.dart';
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future refresh() async {
-    final posts = await Authsevices().getAllUserPost();
+    final posts = await Repositories().getAllUserPost();
     setState(() {
       postLists = posts;
     });
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   FutureBuilder<List<GetPostModel>> postView() {
     return FutureBuilder(
-      future: Authsevices().getAllUserPost(),
+      future: Repositories().getAllUserPost(),
       builder: (context, AsyncSnapshot<List<GetPostModel>> snapshot) {
         if (snapshot.data == null) {
           return const ShimmerWidget();
@@ -125,12 +125,9 @@ class _HomeScreenState extends State<HomeScreen> {
               final postDetails = postLists[index];
               return PostCardWidget(
                 index: index,
-                userName: postDetails.userid!.name!,
-                caption: postDetails.caption!,
-                imageUrl: postDetails.image!,
+                postModel: postDetails,
               );
             },
-           
             itemCount: snapshot.data!.length,
           );
         } else {

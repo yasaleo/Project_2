@@ -16,7 +16,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final desize = MediaQuery.of(context).size;
+    // final desize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.COLOR_SCAFFOLD_BACKGROUND,
       appBar: AppBar(

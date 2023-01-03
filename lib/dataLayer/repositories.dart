@@ -4,15 +4,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:project_2/dataLayer/model/likes_model.dart';
 import 'package:project_2/dataLayer/model/logged_user_details.dart';
 import 'package:project_2/dataLayer/model/login_response_model.dart';
 import 'package:project_2/dataLayer/model/signupmodel.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
 import 'model/get_post_model.dart';
+import 'model/logged_user_postlist.dart';
 
-class Authsevices {
-  final String baseUrl = 'http://172.16.1.253:5000/api/v1';
+class Repositories {
+  final String baseUrl = 'http://192.168.162.14:5000/api/v1';
   //__________________Register_____________________________________________
   Future<int> register({
     required SignupModel model,
@@ -143,7 +145,7 @@ class Authsevices {
     }
   }
 
-  Future<LoggedUserDetails> getLoggedUserDetails() async {
+  Future<LoggedUserModel> getLoggedUserDetails() async {
     final token = Constants.ACCESSTOKEN;
 
     Map<String, String>? headers = {
@@ -157,12 +159,110 @@ class Authsevices {
         headers: headers,
       );
       log(response.statusCode.toString());
-      final details =
-          LoggedUserDetails().loggedUserDetailsFromJson(response.body);
 
-      log(details.email.toString());
+      final details = LoggedUserModel().loggedUserModelFromJson(response.body);
+
+      log(details.followers![0].follower!.email!);
 
       return details;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<LoggedUserPosts>> getLoggedUserPosts({required String id}) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '$baseUrl/user/$id/post',
+        ),
+        headers: headers,
+      );
+      log(" post list with id status code ${response.statusCode}");
+
+      final details = LoggedUserPosts().loggedUserPostsFromJson(response.body);
+
+      return details;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<LoggedUserPosts>> addComment(
+      {required String id, required String comment}) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.post(
+          Uri.parse(
+            '$baseUrl/post/$id/comments',
+          ),
+          headers: headers,
+          body: {"comment": comment});
+      log(" post list with id status code ${response.statusCode}");
+
+      final details = LoggedUserPosts().loggedUserPostsFromJson(response.body);
+
+      return details;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LikesModel> addLike({
+    required String id,
+  }) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrl/post/$id/likes',
+        ),
+        headers: headers,
+      );
+      log(" likes with id status code ${response.statusCode}");
+
+      final likes = LikesModel().likesModelFromJson(response.body);
+
+      return likes;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LikesModel> getLikeCount({
+    required String id,
+  }) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '$baseUrl/post/$id/likes',
+        ),
+        headers: headers,
+      );
+      log(" likes with id status code ${response.statusCode}");
+
+      final likes = LikesModel().likesModelFromJson(response.body);
+      log(likes.count.toString());
+
+      return likes;
     } catch (e) {
       rethrow;
     }

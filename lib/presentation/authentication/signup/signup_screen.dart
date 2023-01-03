@@ -7,7 +7,7 @@ import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/custom_textfeild.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
-import '../../../dataLayer/auth_services.dart';
+import '../../../dataLayer/repositories.dart';
 import '../../widgets/containers.dart';
 import 'otpscreen.dart';
 
@@ -183,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   // );
 
                   if (formkey.currentState!.validate()) {
-                    final respone = await Authsevices().register(
+                    final respone = await Repositories().register(
                         model: SignupModel(
                             email: emailController.text,
                             name: firstnameController.text,

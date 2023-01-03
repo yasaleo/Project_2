@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_2/dataLayer/auth_services.dart';
+import 'package:project_2/dataLayer/repositories.dart';
 import 'package:project_2/presentation/authentication/login/login_screen.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
@@ -104,7 +104,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     seconddigit.text +
                     thirddigit.text +
                     fourthdigit.text;
-                final code = await Authsevices()
+                final code = await Repositories()
                     .verifyOtp(email: widget.email, otp: otp);
                 if (code == 200) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

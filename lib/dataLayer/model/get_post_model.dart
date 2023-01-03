@@ -2,6 +2,8 @@
 //
 //     final GetPostModel = GetPostModelFromJson(jsonString);
 
+// ignore_for_file: prefer_if_null_operators, non_constant_identifier_names
+
 import 'dart:convert';
 
 

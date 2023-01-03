@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../../dataLayer/auth_services.dart';
+import '../../../dataLayer/repositories.dart';
 import '../../constants/constants.dart';
 
 class AddPost extends StatefulWidget {
@@ -31,21 +31,31 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
         actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromWidth(10),
-              maximumSize: const Size.fromWidth(90),
-            ),
-            onPressed: () async {
-              if (finalImage != null) {
-                await Authsevices()
-                    .createPost(captionController.text, finalImage!, context);
-                Navigator.pop(context);
-              } else {}
-            },
-            child: const Text(
-              "post",
-              style: TextStyle(color: Constants.COLOR_BLACK),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromWidth(5),
+                maximumSize: const Size.fromWidth(90),
+                backgroundColor: Constants.COLOR_BLACK,
+                shape: RoundedRectangleBorder(
+                  borderRadius: Constants().BORDERCURVE,
+                  side: const BorderSide(
+                    color: Constants.COLOR_WHITE,
+                  ),
+                ),
+              ),
+              onPressed: () async {
+                if (finalImage != null) {
+                  await Repositories()
+                      .createPost(captionController.text, finalImage!, context);
+                  Navigator.pop(context);
+                } else {}
+              },
+              child: const Text(
+                "post",
+                style: TextStyle(color: Constants.COLOR_WHITE),
+              ),
             ),
           )
         ],

@@ -1,23 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/dataLayer/auth_services.dart';
+import 'package:project_2/dataLayer/model/likes_model.dart';
+import 'package:project_2/dataLayer/repositories.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../dataLayer/model/get_post_model.dart';
 import '../constants/constants.dart';
 
 class PostCardWidget extends StatefulWidget {
   final int index;
-  final String userName;
-  final String caption;
-  final String imageUrl;
-  const PostCardWidget(
-      {super.key,
-      required this.index,
-      required this.userName,
-      required this.caption,
-      required this.imageUrl});
+
+  final GetPostModel postModel;
+  const PostCardWidget({
+    super.key,
+    required this.index,
+    required this.postModel,
+  });
 
   @override
   State<PostCardWidget> createState() => _PostCardWidgetState();
@@ -45,7 +45,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               child: Padding(
                 padding: EdgeInsets.only(left: desize.width * .3 / 10),
                 child: TextSemiBold(
-                  content: " ${widget.userName}",
+                  content: widget.postModel.userid!.name!,
                   color: Constants.COLOR_BLACK,
                   fontsize: 22,
                 ),
@@ -55,7 +55,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               top: desize.height * .4 / 10,
               left: desize.width * .3 / 10,
               child: Text(
-                widget.caption,
+                widget.postModel.caption!,
                 style: const TextStyle(
                   color: Constants.COLOR_BLACK,
                   fontWeight: FontWeight.w600,
@@ -71,7 +71,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 child: ClipRRect(
                   borderRadius: Constants().BORDERCURVE,
                   child: CachedNetworkImage(
-                    imageUrl: widget.imageUrl,
+                    imageUrl: widget.postModel.image!,
                     height: desize.height * 2 / 10,
                     width: desize.width * 8 / 10,
                     fit: BoxFit.cover,
@@ -95,18 +95,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               left: desize.width * .2 / 10,
               child: Row(
                 children: [
-                  TextButton.icon(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Constants.COLOR_BLACK,
-                    ),
-                    onPressed: () {
-                      Authsevices().getAllUserPost();
-                    },
-                    icon: const Icon(
-                      Ionicons.heart_circle_outline,
-                    ),
-                    label: const Text("69 liked"),
-                  ),
+                  LikeButton(id: widget.postModel.id!),
                   Constants.WIDTH10,
                   TextButton.icon(
                     style: TextButton.styleFrom(
@@ -133,5 +122,65 @@ class _PostCardWidgetState extends State<PostCardWidget> {
     } else {
       return Constants.COLOR_PINKISH;
     }
+  }
+}
+
+class LikeButton extends StatefulWidget {
+  const LikeButton({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+
+  final String id;
+
+  @override
+  State<LikeButton> createState() => _LikeButtonState();
+}
+
+class _LikeButtonState extends State<LikeButton> {
+  LikesModel likes = LikesModel();
+  bool isliked = false;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        foregroundColor: Constants.COLOR_BLACK,
+      ),
+      onPressed: () async {
+        final rlike = await Repositories().addLike(id: widget.id);
+        setState(() {
+          likes = rlike;
+          isliked = !isliked;
+        });
+      },
+      icon: AnimatedSwitcher(
+        switchInCurve: Curves.easeInBack,
+        switchOutCurve: Curves.easeInBack,
+        duration: const Duration(milliseconds: 500),
+        child: Icon(
+          Ionicons.heart_circle_outline,
+          key: UniqueKey(),
+          color: isliked
+              ? const Color.fromARGB(255, 230, 0, 0)
+              : Constants.COLOR_BLACK,
+        ),
+      ),
+      label: FutureBuilder(
+          future: Repositories().getLikeCount(id: widget.id),
+          builder: (BuildContext context, AsyncSnapshot<LikesModel> snapshot) {
+            if (snapshot.hasData) {
+              final li = snapshot.requireData;
+              return Text("${li.count} liked");
+            }
+            return const SizedBox(
+              height: 10,
+              width: 10,
+              child: CircularProgressIndicator(
+                color: Constants.COLOR_BLACK,
+                strokeWidth: 2,
+              ),
+            );
+          }),
+    );
   }
 }

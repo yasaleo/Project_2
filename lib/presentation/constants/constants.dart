@@ -21,7 +21,6 @@ class Constants {
   static const TEXTSTYLE_WHITE = TextStyle(color: Constants.COLOR_WHITE);
   static const TEXTSTYLE_BLACK = TextStyle(color: Constants.COLOR_BLACK);
 
-
 //__________SIZEDBOX________________________
   static const HEIGHT10 = SizedBox(height: 10);
   static const HEIGHT20 = SizedBox(height: 20);
@@ -41,8 +40,17 @@ class Constants {
   static const WIDTH50 = SizedBox(
     width: 50,
   );
+  //_____________________circularprogress-indicator______________________
+  static const CIRCULARINDICATOR = Center(
+    child: CircularProgressIndicator(
+      color: Constants.COLOR_WHITE,
+      strokeWidth: 7,
+    ),
+  );
+
   //______________________Acess Token___________________________
-  static  String ACCESSTOKEN ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI2NzYzMjUsImV4cCI6MTY3Mjc2MjcyNX0.EBa3Q5menIUfHrfbxMfUrMfv1Tp37Curu8mg27cTSnU';
+  static String ACCESSTOKEN =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI3NjI4MTQsImV4cCI6MTY3Mjg0OTIxNH0.ja2m7UlrG-B_Wm6y2NP1Lr4NaLR7jtJbXcSSCwTLgNI';
 
   //_________________border CUrve_____________________________________
 
@@ -55,10 +63,15 @@ class Constants {
       barrierColor: Colors.black12,
       context: context,
       builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Constants.COLOR_WHITE,
-            strokeWidth: 7,
+        return WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: Constants.COLOR_WHITE,
+              strokeWidth: 7,
+            ),
           ),
         );
       },

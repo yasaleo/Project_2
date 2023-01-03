@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 
-class AnimatedFollwButton extends StatefulWidget {
-  const AnimatedFollwButton({super.key});
+class  AnimatedFollwButton extends StatefulWidget {
+  bool isFollowing;
+
+  AnimatedFollwButton({
+    super.key,
+    this.isFollowing = false,
+  });
 
   @override
   State<AnimatedFollwButton> createState() => _AnimatedFollwButtonState();
 }
 
 class _AnimatedFollwButtonState extends State<AnimatedFollwButton> {
-  bool isFollowing = false;
   String follow = " Follow ";
   String unfollow = "Unfollow";
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      // switchInCurve: Curves.easeInBack,
-      // switchOutCurve: Curves.easeInBack,
       duration: const Duration(milliseconds: 500),
       child: ElevatedButton(
         key: UniqueKey(),
@@ -29,22 +31,23 @@ class _AnimatedFollwButtonState extends State<AnimatedFollwButton> {
               color: Constants.COLOR_WHITE,
             ),
           ),
-          backgroundColor:
-              isFollowing ? Constants.COLOR_BLACK : Constants.COLOR_WHITE,
+          backgroundColor: widget.isFollowing
+              ? Constants.COLOR_BLACK
+              : Constants.COLOR_WHITE,
         ),
         onPressed: () {
           setState(() {
-            isFollowing = !isFollowing;
+            widget.isFollowing = !widget.isFollowing;
           });
         },
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
-            isFollowing ? unfollow : follow,
+            widget.isFollowing ? unfollow : follow,
             key: UniqueKey(),
             style: TextStyle(
               color:
-                  isFollowing ? Constants.COLOR_WHITE : Constants.COLOR_BLACK,
+                  widget.isFollowing ? Constants.COLOR_WHITE : Constants.COLOR_BLACK,
             ),
           ),
         ),

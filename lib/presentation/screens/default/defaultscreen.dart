@@ -21,7 +21,7 @@ class _DefaultScreenState extends State<DefaultScreen> {
   int selectedindex = 0;
   @override
   Widget build(BuildContext context) {
-    final desize = MediaQuery.of(context).size;
+    // final desize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.COLOR_BLACK,
       body: buildBody(),
@@ -46,7 +46,7 @@ class _DefaultScreenState extends State<DefaultScreen> {
       case 2:
         return const SettingScreeen();
       case 3:
-        return const ProfileScreen();
+        return  ProfileScreen();
 
       case 0:
       default:

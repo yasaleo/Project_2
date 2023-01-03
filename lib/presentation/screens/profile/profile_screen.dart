@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/dataLayer/auth_services.dart';
+import 'package:project_2/dataLayer/repositories.dart';
 import 'package:project_2/dataLayer/model/logged_user_details.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/followers_list/followers_list_screen.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 
+import '../../../dataLayer/model/logged_user_postlist.dart';
 import '../../following_list/following_list_screen.dart';
 import '../../widgets/custom_cached_image.dart';
 import '../../widgets/profile_edit_button.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({
     super.key,
   });
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
+  final getuserdetails = Repositories();
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final getuserdetails = Authsevices();
-  // LoggedUserDetails details = LoggedUserDetails();
   @override
   @override
   Widget build(BuildContext context) {
@@ -36,44 +32,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Center(
         child: FutureBuilder(
+            key: UniqueKey(),
             future: getuserdetails.getLoggedUserDetails(),
             builder: (BuildContext context,
-                AsyncSnapshot<LoggedUserDetails> snapshot) {
-              final details = snapshot.requireData;
-              if (snapshot.connectionState == ConnectionState.done) {
+                AsyncSnapshot<LoggedUserModel> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                final details = snapshot.requireData;
+
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    profilePicture(),
-                    profileDetails(context),
+                    _profilePicture(details),
+                    _profileDetails(context, details),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 15,
                       ),
-                      child: GridView.builder(
-                        physics:
-                            const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: Constants().BORDERCURVE,
-                            child: const CustomCachedImage(
-                              imageUrl:
-                                  "https://res.cloudinary.com/dyhk7g1gq/image/upload/v1672122435/r02s36x0nw6nkrdzex67.jpg",
-                              height: 150,
-                              width: 150,
-                              size: 100,
-                            ),
-                          );
-                        },
-                        itemCount: 30,
-                      ),
+                      child: _userPosts(details),
                     )
                   ],
                 );
@@ -81,18 +57,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               if (snapshot.connectionState == ConnectionState.active ||
                   snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Constants.CIRCULARINDICATOR;
               }
+              if (snapshot.error == true) {
+                return Constants.CIRCULARINDICATOR;
+              }
+              return Constants.CIRCULARINDICATOR;
             }),
       ),
     );
   }
 
-  Column profileDetails(BuildContext context) {
+  FutureBuilder<List<LoggedUserPosts>> _userPosts(LoggedUserModel details) {
+    return FutureBuilder(
+                        future: Repositories()
+                            .getLoggedUserPosts(id: details.id!),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<LoggedUserPosts>> snapshot) {
+                          if (snapshot.hasData) {
+                            final posts = snapshot.requireData;
+                            return GridView.builder(
+                              physics:
+                                  const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                              ),
+                              itemBuilder: (context, index) {
+                                return ClipRRect(
+                                  borderRadius: Constants().BORDERCURVE,
+                                  child:  CustomCachedImage(
+                                    imageUrl:
+                                        posts[index].image!,
+                                    height: 150,
+                                    width: 150,
+                                    size: 100,
+                                  ),
+                                );
+                              },
+                              itemCount: posts.length,
+                            );
+                          }
+                          return Constants.CIRCULARINDICATOR;
+                        });
+  }
+
+  Column _profileDetails(BuildContext context, LoggedUserModel details) {
     return Column(
       children: [
         TextSemiBold(
-          content: "${details.name}",
+          content: details.name!,
           fontsize: 30,
           color: Constants.COLOR_WHITE,
         ),
@@ -102,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: const TextStyle(color: Constants.COLOR_WHITE),
         ),
         Constants.HEIGHT10,
-        followDetails(context),
+        followDetails(context, details),
         const Divider(
           color: Constants.COLOR_WHITE,
           thickness: .8,
@@ -114,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  IntrinsicHeight followDetails(BuildContext context) {
+  IntrinsicHeight followDetails(BuildContext context, LoggedUserModel details) {
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -125,15 +142,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             radius: 40,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const FollowingListScreen(),
+                builder: (context) => FollowingListScreen(
+                  followingList: details.following!,
+                ),
               ));
             },
             child: Column(
               children: [
-                // Text(
-                //   "${details.following!.length}",
-                //   style: const TextStyle(color: Constants.COLOR_WHITE),
-                // ),
+                Text(
+                  "${details.following!.length}",
+                  style: const TextStyle(color: Constants.COLOR_WHITE),
+                ),
                 const Text(
                   "Following",
                   style: TextStyle(color: Constants.COLOR_WHITE),
@@ -152,15 +171,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             radius: 40,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const FollowersListScreen(),
+                builder: (context) => FollowersListScreen(
+                  followerList: details.followers!,
+                ),
               ));
             },
             child: Column(
               children: [
-                // Text(
-                //   "${details.followers!.length}",
-                //   style: const TextStyle(color: Constants.COLOR_WHITE),
-                // ),
+                Text(
+                  "${details.followers!.length}",
+                  style: const TextStyle(color: Constants.COLOR_WHITE),
+                ),
                 const Text(
                   "Followers",
                   style: TextStyle(color: Constants.COLOR_WHITE),
@@ -173,17 +194,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Stack profilePicture() {
+  Stack _profilePicture(LoggedUserModel details) {
     return Stack(
-      children: const [
+      children: [
         Center(
           child: ClipOval(
             child: Material(
               color: Colors.transparent,
               child: CustomCachedImage(
-                imageUrl: """
-        http://res.cloudinary.com/dyhk7g1gq/image/upload/v1672589025/acaxftwvuczpzvmj0drx.png
-""",
+                imageUrl: details.profilePic!,
                 height: 150,
                 width: 150,
                 size: 100,
@@ -191,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        Positioned(
+        const Positioned(
           top: 110,
           left: 230,
           child: ProfileEditButton(),
