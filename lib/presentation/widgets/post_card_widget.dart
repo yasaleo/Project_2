@@ -1,13 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/dataLayer/model/likes_model.dart';
+import 'package:project_2/dataLayer/model/get_comment.dart';
 import 'package:project_2/dataLayer/repositories.dart';
+import 'package:project_2/presentation/widgets/custom_cached_image.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../dataLayer/model/get_post_model.dart';
 import '../constants/constants.dart';
+import '../screens/add_post/comment_post.dart';
+import 'like_button.dart';
 
 class PostCardWidget extends StatefulWidget {
   final int index;
@@ -97,13 +100,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 children: [
                   LikeButton(id: widget.postModel.id!),
                   Constants.WIDTH10,
-                  TextButton.icon(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Constants.COLOR_BLACK,
-                    ),
-                    onPressed: () {},
-                    icon: const Icon(Ionicons.chatbox_outline),
-                    label: const Text("69 comments"),
+                  CommentButton(
+                    id: widget.postModel.id!,
                   )
                 ],
               ),
@@ -125,62 +123,4 @@ class _PostCardWidgetState extends State<PostCardWidget> {
   }
 }
 
-class LikeButton extends StatefulWidget {
-  const LikeButton({
-    Key? key,
-    required this.id,
-  }) : super(key: key);
 
-  final String id;
-
-  @override
-  State<LikeButton> createState() => _LikeButtonState();
-}
-
-class _LikeButtonState extends State<LikeButton> {
-  LikesModel likes = LikesModel();
-  bool isliked = false;
-  @override
-  Widget build(BuildContext context) {
-    return TextButton.icon(
-      style: TextButton.styleFrom(
-        foregroundColor: Constants.COLOR_BLACK,
-      ),
-      onPressed: () async {
-        final rlike = await Repositories().addLike(id: widget.id);
-        setState(() {
-          likes = rlike;
-          isliked = !isliked;
-        });
-      },
-      icon: AnimatedSwitcher(
-        switchInCurve: Curves.easeInBack,
-        switchOutCurve: Curves.easeInBack,
-        duration: const Duration(milliseconds: 500),
-        child: Icon(
-          Ionicons.heart_circle_outline,
-          key: UniqueKey(),
-          color: isliked
-              ? const Color.fromARGB(255, 230, 0, 0)
-              : Constants.COLOR_BLACK,
-        ),
-      ),
-      label: FutureBuilder(
-          future: Repositories().getLikeCount(id: widget.id),
-          builder: (BuildContext context, AsyncSnapshot<LikesModel> snapshot) {
-            if (snapshot.hasData) {
-              final li = snapshot.requireData;
-              return Text("${li.count} liked");
-            }
-            return const SizedBox(
-              height: 10,
-              width: 10,
-              child: CircularProgressIndicator(
-                color: Constants.COLOR_BLACK,
-                strokeWidth: 2,
-              ),
-            );
-          }),
-    );
-  }
-}

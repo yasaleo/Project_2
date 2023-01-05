@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_2/dataLayer/model/logged_user_details.dart';
+import 'package:project_2/dataLayer/repositories.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
 import '../widgets/animated_follow_button.dart';
@@ -17,36 +18,43 @@ class FollowingListScreen extends StatelessWidget {
         backgroundColor: Constants.COLOR_BLACK,
         title: const Text("Following", style: Constants.TEXTSTYLE_WHITE),
       ),
-      body:followingList.isEmpty? const Center(
+      body: followingList.isEmpty
+          ? const Center(
               child: Text("No following"),
-            ): ListView.builder(
-        itemBuilder: (context, index) {
-          final following = followingList[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: ListTile(
-              title:  Text(
-                following.follow!.name!,
-                style: Constants.TEXTSTYLE_WHITE,
-              ),
-              trailing: AnimatedFollwButton(),
-              leading:  ClipOval(
-                child: Material(
-                  color: Colors.transparent,
-                  child: CustomCachedImage(
-                    imageUrl:following.follow!.profilePic!
-                        ,
-                    height: 50,
-                    width: 50,
-                    size: 25,
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                final following = followingList[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    title: Text(
+                      following.follow!.name!,
+                      style: Constants.TEXTSTYLE_WHITE,
+                    ),
+                    trailing: AnimatedFollwButton(
+                      onClick: () {
+                        Repositories().folowRequest(id: following.follow!.id!);
+                      },
+                      isFollowing: true,
+                    ),
+                    leading: ClipOval(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: CustomCachedImage(
+                          imageUrl: following.follow!.profilePic ??
+                              "https://freesvg.org/img/abstract-user-flat-4.png",
+                          height: 50,
+                          width: 50,
+                          size: 25,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
+              itemCount: followingList.length,
             ),
-          );
-        },
-        itemCount: followingList.length,
-      ),
     );
   }
 }

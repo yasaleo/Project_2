@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 
-class  AnimatedFollwButton extends StatefulWidget {
+class AnimatedFollwButton extends StatefulWidget {
   bool isFollowing;
+  final GestureTapCallback onClick;
 
-  AnimatedFollwButton({
-    super.key,
-    this.isFollowing = false,
-  });
+  AnimatedFollwButton(
+      {super.key, this.isFollowing = false, required this.onClick});
 
   @override
   State<AnimatedFollwButton> createState() => _AnimatedFollwButtonState();
@@ -36,6 +35,7 @@ class _AnimatedFollwButtonState extends State<AnimatedFollwButton> {
               : Constants.COLOR_WHITE,
         ),
         onPressed: () {
+          widget.onClick();
           setState(() {
             widget.isFollowing = !widget.isFollowing;
           });
@@ -46,8 +46,9 @@ class _AnimatedFollwButtonState extends State<AnimatedFollwButton> {
             widget.isFollowing ? unfollow : follow,
             key: UniqueKey(),
             style: TextStyle(
-              color:
-                  widget.isFollowing ? Constants.COLOR_WHITE : Constants.COLOR_BLACK,
+              color: widget.isFollowing
+                  ? Constants.COLOR_WHITE
+                  : Constants.COLOR_BLACK,
             ),
           ),
         ),

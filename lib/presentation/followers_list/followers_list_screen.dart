@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_2/dataLayer/model/logged_user_details.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
+import '../../dataLayer/repositories.dart';
 import '../widgets/animated_follow_button.dart';
 import '../widgets/custom_cached_image.dart';
 
@@ -32,13 +33,16 @@ class FollowersListScreen extends StatelessWidget {
                       style: Constants.TEXTSTYLE_WHITE,
                     ),
                     trailing: AnimatedFollwButton(
-                      isFollowing: true,
+                      onClick: () {
+                        Repositories().folowRequest(id: follower.follower!.id!);
+                        
+                      },
                     ),
                     leading: ClipOval(
                       child: Material(
                         color: Colors.transparent,
                         child: CustomCachedImage(
-                          imageUrl: follower.follower!.profilePic!,
+                          imageUrl: follower.follower!.profilePic??"https://freesvg.org/img/abstract-user-flat-4.png",
                           height: 50,
                           width: 50,
                           size: 25,

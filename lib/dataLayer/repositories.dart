@@ -10,11 +10,13 @@ import 'package:project_2/dataLayer/model/login_response_model.dart';
 import 'package:project_2/dataLayer/model/signupmodel.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
+import 'model/get_comment.dart';
 import 'model/get_post_model.dart';
 import 'model/logged_user_postlist.dart';
+import 'model/search_model.dart';
 
 class Repositories {
-  final String baseUrl = 'http://192.168.162.14:5000/api/v1';
+  final String baseUrl = 'http://172.16.1.253:5000/api/v1';
   //__________________Register_____________________________________________
   Future<int> register({
     required SignupModel model,
@@ -145,6 +147,7 @@ class Repositories {
     }
   }
 
+  //__________________GET Logged userDetails_____________________________________________
   Future<LoggedUserModel> getLoggedUserDetails() async {
     final token = Constants.ACCESSTOKEN;
 
@@ -193,8 +196,7 @@ class Repositories {
     }
   }
 
-  Future<List<LoggedUserPosts>> addComment(
-      {required String id, required String comment}) async {
+  Future<void> addComment({required String id, required String comment}) async {
     final token = Constants.ACCESSTOKEN;
 
     Map<String, String>? headers = {
@@ -209,9 +211,34 @@ class Repositories {
           body: {"comment": comment});
       log(" post list with id status code ${response.statusCode}");
 
-      final details = LoggedUserPosts().loggedUserPostsFromJson(response.body);
+      // final details = LoggedUserPosts().loggedUserPostsFromJson(response.body);
 
-      return details;
+      // return details;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<GetCommentModel> getComments({
+    required String id,
+  }) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '$baseUrl/post/$id/comments',
+        ),
+        headers: headers,
+      );
+      log(" comment list with id status code ${response.statusCode}");
+
+      final comments = GetCommentModel().getCommentModelFromJson(response.body);
+
+      return comments;
     } catch (e) {
       rethrow;
     }
@@ -263,6 +290,55 @@ class Repositories {
       log(likes.count.toString());
 
       return likes;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<SearchModel>> searchProfile({required String query}) async {
+    final token = Constants.ACCESSTOKEN;
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '$baseUrl/user?search=$query',
+        ),
+        headers: headers,
+      );
+      log(" search with query status code ${response.statusCode}");
+
+      final searchlist = SearchModel().searchModelFromJson(response.body);
+      log(searchlist.length.toString());
+
+      return searchlist;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> folowRequest({required String id}) async {
+    final token = Constants.ACCESSTOKEN;
+    log("starteeedddddddd");
+
+    Map<String, String>? headers = {
+      "Authorization": "Bearer $token",
+    };
+    try {
+      final response = await http.post(
+        Uri.parse(
+          '$baseUrl/user/$id/follow',
+        ),
+        headers: headers,
+      );
+      log(" follow with id status code ${response.statusCode}");
+
+      // final searchlist = SearchModel().searchModelFromJson(response.body);
+      // log(searchlist.length.toString());
+
+      // return searchlist;
     } catch (e) {
       rethrow;
     }

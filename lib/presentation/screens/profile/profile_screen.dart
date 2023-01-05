@@ -70,39 +70,36 @@ class ProfileScreen extends StatelessWidget {
 
   FutureBuilder<List<LoggedUserPosts>> _userPosts(LoggedUserModel details) {
     return FutureBuilder(
-                        future: Repositories()
-                            .getLoggedUserPosts(id: details.id!),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<LoggedUserPosts>> snapshot) {
-                          if (snapshot.hasData) {
-                            final posts = snapshot.requireData;
-                            return GridView.builder(
-                              physics:
-                                  const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (context, index) {
-                                return ClipRRect(
-                                  borderRadius: Constants().BORDERCURVE,
-                                  child:  CustomCachedImage(
-                                    imageUrl:
-                                        posts[index].image!,
-                                    height: 150,
-                                    width: 150,
-                                    size: 100,
-                                  ),
-                                );
-                              },
-                              itemCount: posts.length,
-                            );
-                          }
-                          return Constants.CIRCULARINDICATOR;
-                        });
+        future: Repositories().getLoggedUserPosts(id: details.id!),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<LoggedUserPosts>> snapshot) {
+          if (snapshot.hasData) {
+            final posts = snapshot.requireData;
+            return GridView.builder(
+              physics:
+                  const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                return ClipRRect(
+                  borderRadius: Constants().BORDERCURVE,
+                  child: CustomCachedImage(
+                    imageUrl: posts[index].image!,
+                    height: 150,
+                    width: 150,
+                    size: 100,
+                  ),
+                );
+              },
+              itemCount: posts.length,
+            );
+          }
+          return Constants.CIRCULARINDICATOR;
+        });
   }
 
   Column _profileDetails(BuildContext context, LoggedUserModel details) {

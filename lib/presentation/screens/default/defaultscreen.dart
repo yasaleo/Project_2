@@ -2,7 +2,7 @@ import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/presentation/constants/constants.dart';
-import 'package:project_2/presentation/screens/events/events_screen.dart';
+import 'package:project_2/presentation/screens/search/search_screen.dart';
 import 'package:project_2/presentation/screens/profile/profile_screen.dart';
 import 'package:project_2/presentation/screens/settings/settings_screen.dart';
 
@@ -21,7 +21,6 @@ class _DefaultScreenState extends State<DefaultScreen> {
   int selectedindex = 0;
   @override
   Widget build(BuildContext context) {
-    // final desize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.COLOR_BLACK,
       body: buildBody(),
@@ -31,8 +30,8 @@ class _DefaultScreenState extends State<DefaultScreen> {
         currentIndex: selectedindex,
         items: [
           FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-          FloatingNavbarItem(icon: Ionicons.notifications, title: 'events'),
-          FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chats'),
+          FloatingNavbarItem(icon: Ionicons.search, title: 'Search'),
+          FloatingNavbarItem(icon: Icons.chat_bubble, title: 'Chats'),
           FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
         ],
       ),
@@ -42,11 +41,11 @@ class _DefaultScreenState extends State<DefaultScreen> {
   Widget buildBody() {
     switch (selectedindex) {
       case 1:
-        return const EventsScreen();
+        return const SearchScreen();
       case 2:
         return const SettingScreeen();
       case 3:
-        return  ProfileScreen();
+        return ProfileScreen();
 
       case 0:
       default:
