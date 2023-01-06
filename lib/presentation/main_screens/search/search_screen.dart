@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:project_2/dataLayer/repositories.dart';
+import 'package:project_2/data_layer/repositeries/repositories.dart';
 
-import '../../../dataLayer/model/search_model.dart';
+import '../../../data_layer/model/search_model.dart';
 import '../../constants/constants.dart';
 import '../../widgets/animated_follow_button.dart';
 import '../../widgets/custom_cached_image.dart';

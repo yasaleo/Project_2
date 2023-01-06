@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/dataLayer/model/get_comment.dart';
-import 'package:project_2/dataLayer/repositories.dart';
+import 'package:project_2/data_layer/model/get_comment.dart';
+import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/presentation/widgets/custom_cached_image.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../dataLayer/model/get_post_model.dart';
+import '../../data_layer/model/get_post_model.dart';
 import '../constants/constants.dart';
-import '../screens/add_post/comment_post.dart';
+import '../main_screens/add_post/comment_post.dart';
 import 'like_button.dart';
 
 class PostCardWidget extends StatefulWidget {

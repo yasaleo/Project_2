@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/dataLayer/repositories.dart';
-import 'package:project_2/dataLayer/model/logged_user_details.dart';
+import 'package:project_2/data_layer/repositeries/repositories.dart';
+import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 import 'package:project_2/presentation/followers_list/followers_list_screen.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 
-import '../../../dataLayer/model/logged_user_postlist.dart';
+import '../../../data_layer/model/logged_user_postlist.dart';
 import '../../following_list/following_list_screen.dart';
 import '../../widgets/custom_cached_image.dart';
 import '../../widgets/profile_edit_button.dart';

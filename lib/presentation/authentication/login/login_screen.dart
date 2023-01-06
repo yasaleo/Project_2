@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/dataLayer/repositories.dart';
+import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/presentation/authentication/signup/signup_screen.dart';
-import 'package:project_2/presentation/screens/default/defaultscreen.dart';
+import 'package:project_2/presentation/main_screens/default/defaultscreen.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/containers.dart';
 import 'package:rive/rive.dart';

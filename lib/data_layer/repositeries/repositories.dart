@@ -4,16 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:project_2/dataLayer/model/likes_model.dart';
-import 'package:project_2/dataLayer/model/logged_user_details.dart';
-import 'package:project_2/dataLayer/model/login_response_model.dart';
-import 'package:project_2/dataLayer/model/signupmodel.dart';
+import 'package:project_2/data_layer/model/likes_model.dart';
+import 'package:project_2/data_layer/model/logged_user_details.dart';
+import 'package:project_2/data_layer/model/login_response_model.dart';
+import 'package:project_2/data_layer/model/signupmodel.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
-import 'model/get_comment.dart';
-import 'model/get_post_model.dart';
-import 'model/logged_user_postlist.dart';
-import 'model/search_model.dart';
+import '../model/get_comment.dart';
+import '../model/get_post_model.dart';
+import '../model/logged_user_postlist.dart';
+import '../model/search_model.dart';
 
 class Repositories {
   final String baseUrl = 'http://172.16.1.253:5000/api/v1';

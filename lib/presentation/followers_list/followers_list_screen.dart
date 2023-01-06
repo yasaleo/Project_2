@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/dataLayer/model/logged_user_details.dart';
+import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/presentation/constants/constants.dart';
 
-import '../../dataLayer/repositories.dart';
+import '../../data_layer/repositeries/repositories.dart';
 import '../widgets/animated_follow_button.dart';
 import '../widgets/custom_cached_image.dart';
 
