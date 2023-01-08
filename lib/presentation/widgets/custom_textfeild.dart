@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 
-import '../constants/constants.dart';
+import 'constants/constants.dart';
 
 class CustomTextfeild extends StatelessWidget {
   const CustomTextfeild({
@@ -20,11 +20,13 @@ class CustomTextfeild extends StatelessWidget {
   final Widget icon;
   final FocusNode? focusnode;
   final Function(String?)? onchanged;
+  // final ValueChanged<String>? onChanged;
   final Function(String)? validator;
 
   final TextEditingController? controller;
   final String heading;
   final bool obscureText;
+  
 
   @override
   Widget build(BuildContext context) {

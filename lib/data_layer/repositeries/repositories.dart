@@ -8,7 +8,7 @@ import 'package:project_2/data_layer/model/likes_model.dart';
 import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/data_layer/model/login_response_model.dart';
 import 'package:project_2/data_layer/model/signupmodel.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 
 import '../model/get_comment.dart';
 import '../model/get_post_model.dart';

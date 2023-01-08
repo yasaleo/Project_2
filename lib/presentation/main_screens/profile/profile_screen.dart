@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/data_layer/model/logged_user_details.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/followers_list/followers_list_screen.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
 

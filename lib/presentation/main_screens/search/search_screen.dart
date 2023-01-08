@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
 
 import '../../../data_layer/model/search_model.dart';
-import '../../constants/constants.dart';
+import '../../widgets/constants/constants.dart';
 import '../../widgets/animated_follow_button.dart';
 import '../../widgets/custom_cached_image.dart';
 

@@ -1,7 +1,7 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/main_screens/search/search_screen.dart';
 import 'package:project_2/presentation/main_screens/profile/profile_screen.dart';
 import 'package:project_2/presentation/main_screens/settings/settings_screen.dart';

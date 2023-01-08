@@ -3,7 +3,7 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../../data_layer/model/get_comment.dart';
 import '../../../data_layer/repositeries/repositories.dart';
-import '../../constants/constants.dart';
+import '../../widgets/constants/constants.dart';
 import '../../widgets/custom_cached_image.dart';
 
 class CommentButton extends StatefulWidget {

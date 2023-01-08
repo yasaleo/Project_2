@@ -8,7 +8,7 @@ import 'package:project_2/presentation/widgets/text_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../data_layer/model/get_post_model.dart';
-import '../constants/constants.dart';
+import 'constants/constants.dart';
 import '../main_screens/add_post/comment_post.dart';
 import 'like_button.dart';
 

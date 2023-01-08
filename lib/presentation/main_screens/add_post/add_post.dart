@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../data_layer/repositeries/repositories.dart';
-import '../../constants/constants.dart';
+import '../../widgets/constants/constants.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({super.key});

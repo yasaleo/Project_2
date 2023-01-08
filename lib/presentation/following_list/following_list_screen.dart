@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 
 import '../widgets/animated_follow_button.dart';
 import '../widgets/custom_cached_image.dart';

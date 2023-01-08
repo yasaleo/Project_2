@@ -2,7 +2,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/main_screens/add_post/add_post.dart';
 import 'package:project_2/presentation/widgets/post_card_widget.dart';
 import 'package:rive/rive.dart';

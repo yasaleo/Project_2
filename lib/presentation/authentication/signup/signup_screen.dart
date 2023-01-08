@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:project_2/data_layer/model/signupmodel.dart';
-import 'package:project_2/presentation/constants/constants.dart';
+import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/custom_textfeild.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
