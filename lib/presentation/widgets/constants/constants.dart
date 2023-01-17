@@ -50,7 +50,7 @@ class Constants {
 
   //______________________Acess Token___________________________
   static String ACCESSTOKEN =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYTE2YWY1YzA5ZTFjYjFlNjFiMDBlMSJ9LCJpYXQiOjE2NzI3NjI4MTQsImV4cCI6MTY3Mjg0OTIxNH0.ja2m7UlrG-B_Wm6y2NP1Lr4NaLR7jtJbXcSSCwTLgNI';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYzQwOTA3MzEzNjc5NTA2M2JhN2I2YSJ9LCJpYXQiOjE2NzM3OTE3NTEsImV4cCI6MTY3Mzg3ODE1MX0.wLO41NijdGVAb72llRzGn2JwWOTURYuDoMEn5MXaysY';
 
   //_________________border CUrve_____________________________________
 

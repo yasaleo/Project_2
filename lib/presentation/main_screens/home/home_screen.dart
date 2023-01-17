@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             itemCount: snapshot.data!.length,
           );
-        } else {
+        }  else {
           return const CircularProgressIndicator(
             color: Constants.COLOR_WHITE,
             strokeWidth: 4,

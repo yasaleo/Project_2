@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:project_2/data_layer/model/likes_model.dart';
 import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/data_layer/model/login_response_model.dart';
@@ -20,7 +19,6 @@ class Repositories {
   //__________________Register_____________________________________________
   Future<int> register({
     required SignupModel model,
-    required BuildContext context,
   }) async {
     try {
       final response = await http.post(
@@ -43,8 +41,8 @@ class Repositories {
 
       print(response.statusCode);
       return response.statusCode;
-    } on SocketException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
+    } on SocketException {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
       rethrow;
       // e;
       // log(e.toString());
@@ -67,28 +65,25 @@ class Repositories {
   }
   //__________________Login_____________________________________________
 
-  Future<LoginResponse> login(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+  Future<LoginResponse> login({
+    required String email,
+    required String password,
+  }) async {
     try {
       final response = await http.post(Uri.parse('$baseUrl/auth/login'),
           body: {"email": email, "password": password});
       final userDetails = LoginResponse().loginResponseFromJson(response.body);
-      log(response.statusCode.toString());
-      // log(userDetails.user!.email.toString());
-      return userDetails; //register
+      log("${response.statusCode.toString()} login status");
 
-    } on SocketException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
-      rethrow;
-    } on HttpException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
-      rethrow;
-    } on ClientException catch (e) {
-      log("client caught ");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
-      rethrow;
+      if (response.statusCode == 200) {
+        return userDetails; //register
+
+      } else {
+        log("exception");
+        throw Exception();
+      }
+    } catch (e) {
+      rethrow; 
     }
   }
   //__________________Create POST_____________________________________________

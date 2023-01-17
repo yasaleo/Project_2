@@ -1,14 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/data_layer/repositeries/repositories.dart';
-import 'package:project_2/presentation/authentication/signup/signup_screen.dart';
-import 'package:project_2/presentation/main_screens/default/defaultscreen.dart';
-import 'package:project_2/presentation/widgets/animated_button.dart';
-import 'package:project_2/presentation/widgets/containers.dart';
+import 'package:project_2/data_layer/model/login_response_model.dart';
 import 'package:rive/rive.dart';
-import 'package:project_2/presentation/widgets/constants/constants.dart';
+
+import '../../../buisiness_logic/Login/login_bloc.dart';
+import '../../../data_layer/failures/main_failiure.dart';
+import '../../widgets/animated_button.dart';
+import '../../widgets/constants/constants.dart';
+import '../../widgets/containers.dart';
 import '../../widgets/custom_textfeild.dart';
 import '../../widgets/text_widgets.dart';
+import '../signup/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -197,9 +202,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SignupScreen(),
-                      ));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SignupScreen(),
+                        ),
+                      );
                     },
                     style: TextButton.styleFrom(),
                     child: const TextSemiBold(
@@ -218,44 +225,58 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               top: desize.height * 8.3 / 10,
               left: desize.width * 1 / 10,
-              child: AnimatedButton(
-                width: desize.width * 8 / 10,
-                cwidget: const TextSemiBold(
-                  content: "Login",
-                  fontsize: 24,
-                ),
-                onTap: () async {
-                  isHandsUp?.change(false);
-                  if (formkey.currentState!.validate()) {
-                    // trigSuccess!.change(true);
-
-                    final userDetails = await Repositories().login(
-                      email: emailcontroller.text,
-                      password: passwordcontroller.text,
-                      context: context
+              child: BlocListener<LoginBloc, LoginState>(
+                listener: (context, state) {
+                  if (state.loginresponse.isSome()) {
+                    log("kery");
+                    // log(state.loginresponse.);
+                    trigFail?.change(true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("bad"),
+                      ),
                     );
-                    try {
-                      trigSuccess?.change(true);
-                      Constants.ACCESSTOKEN = userDetails.accessToken!;
-                      Future.delayed(
-                        const Duration(seconds: 4),
-                        () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DefaultScreen(),
-                        )),
-                      );
-                    } catch (e) {
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("wrong username or password")));
-                    }
-
-                    // if (code == 401) {
-                    //   trigFail?.change(true);
-                    // }
+                  } else {
+                    log("kery");
+                    // log(state.failure!.message);
+                    trigSuccess?.change(true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Logged in 🥳"),
+                      ),
+                    );
                   }
-
-                  // trigSuccess?.change(true);
                 },
+                child: BlocBuilder<LoginBloc, LoginState>(
+                  builder: (context, state) {
+                    if (state.isLoading) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: const [
+                          CircularProgressIndicator(),
+                        ],
+                      );
+                    }
+                    return AnimatedButton(
+                        width: desize.width * 8 / 10,
+                        cwidget: const TextSemiBold(
+                          content: "Login",
+                          fontsize: 24,
+                        ),
+                        onTap: () async {
+                          isHandsUp?.change(false);
+                          if (formkey.currentState!.validate()) {
+                            BlocProvider.of<LoginBloc>(context).add(
+                                LoginRequested(
+                                    email: emailcontroller.text,
+                                    password: passwordcontroller.text));
+                          }
+
+                          // trigSuccess?.change(true);
+                        });
+                  },
+                ),
               ),
             )
           ],
