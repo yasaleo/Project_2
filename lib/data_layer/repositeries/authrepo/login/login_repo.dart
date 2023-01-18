@@ -15,7 +15,7 @@ class LoginRepo implements ILoginRepo {
   Future<Either<MainFailure, LoginResponse>> loginUser(
       {required String email, required String password}) async {
     try {
-    log("request called");
+      log("request called");
 
       final response = await http.post(
           Uri.parse('${ApiRoutes.baseUrl}/auth/login'),
@@ -24,12 +24,16 @@ class LoginRepo implements ILoginRepo {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = LoginResponse().loginResponseFromJson(response.body);
+        log("if kery login");
         return right(result);
       } else {
-        return left(const MainFailure.serverFailure(message: " server error found"));
+        log("oops it's else again");
+        return left(
+            const MainFailure.serverFailure(message: " server error found"));
       }
     } catch (_) {
-      return left(const MainFailure.clientFailure(message: 'broo client error'));
+      return left(
+          const MainFailure.clientFailure(message: 'broo client error'));
     }
   }
 }

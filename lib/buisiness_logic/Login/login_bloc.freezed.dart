@@ -241,9 +241,10 @@ abstract class LoginRequested implements LoginEvent {
 /// @nodoc
 mixin _$LoginState {
   bool get isLoading => throw _privateConstructorUsedError;
-  Option<Either<MainFailure, LoginResponse>> get loginresponse =>
+  Option<Either<MainFailure, LoginResponse>> get loginOption =>
       throw _privateConstructorUsedError;
   MainFailure? get failure => throw _privateConstructorUsedError;
+  LoginResponse? get loginResponse => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -258,8 +259,9 @@ abstract class $LoginStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
-      Option<Either<MainFailure, LoginResponse>> loginresponse,
-      MainFailure? failure});
+      Option<Either<MainFailure, LoginResponse>> loginOption,
+      MainFailure? failure,
+      LoginResponse? loginResponse});
 
   $MainFailureCopyWith<$Res>? get failure;
 }
@@ -278,22 +280,27 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? loginresponse = null,
+    Object? loginOption = null,
     Object? failure = freezed,
+    Object? loginResponse = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      loginresponse: null == loginresponse
-          ? _value.loginresponse
-          : loginresponse // ignore: cast_nullable_to_non_nullable
+      loginOption: null == loginOption
+          ? _value.loginOption
+          : loginOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<MainFailure, LoginResponse>>,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
               as MainFailure?,
+      loginResponse: freezed == loginResponse
+          ? _value.loginResponse
+          : loginResponse // ignore: cast_nullable_to_non_nullable
+              as LoginResponse?,
     ) as $Val);
   }
 
@@ -320,8 +327,9 @@ abstract class _$$_LoginStateCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
-      Option<Either<MainFailure, LoginResponse>> loginresponse,
-      MainFailure? failure});
+      Option<Either<MainFailure, LoginResponse>> loginOption,
+      MainFailure? failure,
+      LoginResponse? loginResponse});
 
   @override
   $MainFailureCopyWith<$Res>? get failure;
@@ -339,22 +347,27 @@ class __$$_LoginStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? loginresponse = null,
+    Object? loginOption = null,
     Object? failure = freezed,
+    Object? loginResponse = freezed,
   }) {
     return _then(_$_LoginState(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      loginresponse: null == loginresponse
-          ? _value.loginresponse
-          : loginresponse // ignore: cast_nullable_to_non_nullable
+      loginOption: null == loginOption
+          ? _value.loginOption
+          : loginOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<MainFailure, LoginResponse>>,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
               as MainFailure?,
+      loginResponse: freezed == loginResponse
+          ? _value.loginResponse
+          : loginResponse // ignore: cast_nullable_to_non_nullable
+              as LoginResponse?,
     ));
   }
 }
@@ -363,18 +376,23 @@ class __$$_LoginStateCopyWithImpl<$Res>
 
 class _$_LoginState implements _LoginState {
   const _$_LoginState(
-      {required this.isLoading, required this.loginresponse, this.failure});
+      {required this.isLoading,
+      required this.loginOption,
+      this.failure,
+      this.loginResponse});
 
   @override
   final bool isLoading;
   @override
-  final Option<Either<MainFailure, LoginResponse>> loginresponse;
+  final Option<Either<MainFailure, LoginResponse>> loginOption;
   @override
   final MainFailure? failure;
+  @override
+  final LoginResponse? loginResponse;
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, loginresponse: $loginresponse, failure: $failure)';
+    return 'LoginState(isLoading: $isLoading, loginOption: $loginOption, failure: $failure, loginResponse: $loginResponse)';
   }
 
   @override
@@ -384,14 +402,16 @@ class _$_LoginState implements _LoginState {
             other is _$_LoginState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.loginresponse, loginresponse) ||
-                other.loginresponse == loginresponse) &&
-            (identical(other.failure, failure) || other.failure == failure));
+            (identical(other.loginOption, loginOption) ||
+                other.loginOption == loginOption) &&
+            (identical(other.failure, failure) || other.failure == failure) &&
+            (identical(other.loginResponse, loginResponse) ||
+                other.loginResponse == loginResponse));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, isLoading, loginresponse, failure);
+      Object.hash(runtimeType, isLoading, loginOption, failure, loginResponse);
 
   @JsonKey(ignore: true)
   @override
@@ -403,15 +423,18 @@ class _$_LoginState implements _LoginState {
 abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {required final bool isLoading,
-      required final Option<Either<MainFailure, LoginResponse>> loginresponse,
-      final MainFailure? failure}) = _$_LoginState;
+      required final Option<Either<MainFailure, LoginResponse>> loginOption,
+      final MainFailure? failure,
+      final LoginResponse? loginResponse}) = _$_LoginState;
 
   @override
   bool get isLoading;
   @override
-  Option<Either<MainFailure, LoginResponse>> get loginresponse;
+  Option<Either<MainFailure, LoginResponse>> get loginOption;
   @override
   MainFailure? get failure;
+  @override
+  LoginResponse? get loginResponse;
   @override
   @JsonKey(ignore: true)
   _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>

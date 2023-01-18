@@ -18,7 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginRequested>((event, emit) async {
       emit(state.copyWith(
         isLoading: true,
-        loginresponse: none(),
+        loginOption: none(),
       ));
       final responseOption = await loginRepo.loginUser(
         email: event.email,
@@ -27,16 +27,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(responseOption.fold(
         (error) => state.copyWith(
           isLoading: false,
-          failure: error,
-          loginresponse: some(
+          
+          loginOption: some(
             left(error),
           ),
+          failure: error,
         ),
         (sucess) => state.copyWith(
           isLoading: false,
-          loginresponse: some(
+          loginOption: some(
             right(sucess),
           ),
+          failure: null,
+          loginResponse: sucess,
         ),
       ));
     });

@@ -3,11 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:project_2/data_layer/model/login_response_model.dart';
 import 'package:rive/rive.dart';
 
 import '../../../buisiness_logic/Login/login_bloc.dart';
-import '../../../data_layer/failures/main_failiure.dart';
 import '../../widgets/animated_button.dart';
 import '../../widgets/constants/constants.dart';
 import '../../widgets/containers.dart';
@@ -15,14 +13,14 @@ import '../../widgets/custom_textfeild.dart';
 import '../../widgets/text_widgets.dart';
 import '../signup/signup_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   @override
   void initState() {
     emailFocusnode.addListener(emailfocus);
@@ -222,65 +220,108 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            Positioned(
-              top: desize.height * 8.3 / 10,
-              left: desize.width * 1 / 10,
-              child: BlocListener<LoginBloc, LoginState>(
-                listener: (context, state) {
-                  if (state.loginresponse.isSome()) {
-                    log("kery");
-                    // log(state.loginresponse.);
-                    trigFail?.change(true);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("bad"),
-                      ),
-                    );
-                  } else {
-                    log("kery");
-                    // log(state.failure!.message);
-                    trigSuccess?.change(true);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Logged in 🥳"),
-                      ),
-                    );
-                  }
-                },
-                child: BlocBuilder<LoginBloc, LoginState>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          CircularProgressIndicator(),
-                        ],
-                      );
-                    }
-                    return AnimatedButton(
-                        width: desize.width * 8 / 10,
-                        cwidget: const TextSemiBold(
-                          content: "Login",
-                          fontsize: 24,
-                        ),
-                        onTap: () async {
-                          isHandsUp?.change(false);
-                          if (formkey.currentState!.validate()) {
-                            BlocProvider.of<LoginBloc>(context).add(
-                                LoginRequested(
-                                    email: emailcontroller.text,
-                                    password: passwordcontroller.text));
-                          }
-
-                          // trigSuccess?.change(true);
-                        });
-                  },
-                ),
-              ),
-            )
+            _LoginButton(
+                desize: desize,
+                trigFail: trigFail,
+                trigSuccess: trigSuccess,
+                isHandsUp: isHandsUp,
+                formkey: formkey,
+                emailcontroller: emailcontroller,
+                passwordcontroller: passwordcontroller)
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  const _LoginButton({
+    Key? key,
+    required this.desize,
+    required this.trigFail,
+    required this.trigSuccess,
+    required this.isHandsUp,
+    required this.formkey,
+    required this.emailcontroller,
+    required this.passwordcontroller,
+  }) : super(key: key);
+
+  final Size desize;
+  final SMIInput<bool>? trigFail;
+  final SMIInput<bool>? trigSuccess;
+  final SMIInput<bool>? isHandsUp;
+  final GlobalKey<FormState> formkey;
+  final TextEditingController emailcontroller;
+  final TextEditingController passwordcontroller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: desize.height * 8.3 / 10,
+      left: desize.width * 1 / 10,
+      child: BlocConsumer<LoginBloc, LoginState>(
+        listener: (context, state) {
+          // log("listener called");
+         
+          log(state.loginOption.isNone().toString());
+          log(state.loginOption.isSome().toString());
+
+          if (state.failure!=null) {
+            // log(state.loginresponse.);
+            trigFail?.change(true);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("failed"),
+              ),
+            );
+          } else if(state.loginResponse!=null) {
+            log("enterd sucess");
+            // log(state.failure!.message);
+            trigSuccess?.change(true);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Logged in 🥳"),
+              ),
+            );
+          }
+        },
+        listenWhen: (previous, current) {
+          log(previous.toString());
+          log(current.toString());
+
+          return current.loginOption.isSome() ;
+        },
+        builder: (context, state) {
+          if (state.isLoading) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: const [
+                CircularProgressIndicator(),
+              ],
+            );
+          }
+
+          return AnimatedButton(
+              width: desize.width * 8 / 10,
+              cwidget: const TextSemiBold(
+                content: "Login",
+                fontsize: 24,
+              ),
+              onTap: () async {
+                isHandsUp?.change(false);
+                if (formkey.currentState!.validate()) {
+                  BlocProvider.of<LoginBloc>(context).add(
+                    LoginRequested(
+                        email: emailcontroller.text,
+                        password: passwordcontroller.text),
+                  );
+                }
+
+                // trigSuccess?.change(true);
+              });
+        },
       ),
     );
   }

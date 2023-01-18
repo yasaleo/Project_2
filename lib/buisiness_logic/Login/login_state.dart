@@ -4,14 +4,15 @@ part of 'login_bloc.dart';
 class LoginState with _$LoginState {
   const factory LoginState({
     required bool isLoading,
-    required Option<Either<MainFailure, LoginResponse>> loginresponse,
+    required Option<Either<MainFailure, LoginResponse>> loginOption,
      MainFailure? failure,
+     LoginResponse? loginResponse
   }) = _LoginState;
 
   factory LoginState.intial() {
     return const LoginState(
       isLoading: false,
-      loginresponse: None(),
+      loginOption: None(),
       
     );
   }

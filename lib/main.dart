@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_2/data_layer/dependancy_injection/injectable.dart';
-import 'package:project_2/data_layer/repositeries/repositories.dart';
-import 'package:project_2/presentation/authentication/login/login_screen.dart';
 
 import 'buisiness_logic/Login/login_bloc.dart';
-
+import 'data_layer/dependancy_injection/injectable.dart';
+import 'data_layer/repositeries/repositories.dart';
+import 'presentation/authentication/login/signin_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,11 @@ class MyApp extends StatelessWidget {
       create: (context) => Repositories(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => getIt<LoginBloc>()),
+          BlocProvider(
+            create: (context) {
+              return getIt<LoginBloc>();
+            },
+          )
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
               colorSchemeSeed: Colors.white,
               useMaterial3: true,
               fontFamily: 'Source Code Pro Regular'),
-          home: const LoginScreen(),
+          home: const SigninScreen(),
         ),
       ),
     );

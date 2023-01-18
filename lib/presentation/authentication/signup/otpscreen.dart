@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:project_2/data_layer/repositeries/repositories.dart';
-import 'package:project_2/presentation/authentication/login/login_screen.dart';
+import 'package:project_2/presentation/authentication/login/signin_screen.dart';
 import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/widgets/animated_button.dart';
 import 'package:project_2/presentation/widgets/text_widgets.dart';
@@ -112,7 +112,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("User created successfully")));
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
+                    builder: (context) => const SigninScreen(),
                   ));
                 }
                 // print(code);
