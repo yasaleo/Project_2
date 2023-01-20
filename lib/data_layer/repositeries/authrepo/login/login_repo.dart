@@ -16,6 +16,7 @@ class LoginRepo implements ILoginRepo {
       {required String email, required String password}) async {
     try {
       log("request called");
+      await Future.delayed(const Duration(milliseconds: 700));
 
       final response = await http.post(
           Uri.parse('${ApiRoutes.baseUrl}/auth/login'),
@@ -31,9 +32,8 @@ class LoginRepo implements ILoginRepo {
         return left(
             const MainFailure.serverFailure(message: " server error found"));
       }
-    } catch (_) {
-      return left(
-          const MainFailure.clientFailure(message: 'broo client error'));
+    } catch (e) {
+      return left(MainFailure.clientFailure(message: e.toString()));
     }
   }
 }

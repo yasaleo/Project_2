@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/presentation/authentication/login/signin_screen.dart';
 import 'package:project_2/presentation/widgets/constants/constants.dart';
-import 'package:project_2/presentation/widgets/animated_button.dart';
-import 'package:project_2/presentation/widgets/text_widgets.dart';
+import 'package:project_2/presentation/widgets/animated_widtgets/animated_button.dart';
+import 'package:project_2/presentation/widgets/non_animated_widgets/text_widgets.dart';
 
-import '../../widgets/custom _otp_feild.dart';
+import '../../widgets/non_animated_widgets/custom _otp_feild.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key, required this.email});

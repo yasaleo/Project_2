@@ -5,6 +5,8 @@ class LoginState with _$LoginState {
   const factory LoginState({
     required bool isLoading,
     required Option<Either<MainFailure, LoginResponse>> loginOption,
+     
+
      MainFailure? failure,
      LoginResponse? loginResponse
   }) = _LoginState;

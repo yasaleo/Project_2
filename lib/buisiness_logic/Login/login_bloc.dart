@@ -24,6 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
         password: event.password,
       );
+
       emit(responseOption.fold(
         (error) => state.copyWith(
           isLoading: false,
@@ -38,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           loginOption: some(
             right(sucess),
           ),
-          failure: null,
+         
           loginResponse: sucess,
         ),
       ));

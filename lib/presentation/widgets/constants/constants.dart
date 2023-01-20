@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 class Constants {
   static const COLOR_BLUE = Color.fromARGB(255, 162, 229, 223);
@@ -41,9 +42,15 @@ class Constants {
     width: 50,
   );
   //_____________________circularprogress-indicator______________________
-  static const CIRCULARINDICATOR = Center(
+  static const CIRCULARINDICATOR_WHITE = Center(
     child: CircularProgressIndicator(
       color: Constants.COLOR_WHITE,
+      strokeWidth: 7,
+    ),
+  );
+  static const CIRCULARINDICATOR_BLACK = Center(
+    child: CircularProgressIndicator(
+      color: Constants.COLOR_BLACK,
       strokeWidth: 7,
     ),
   );
@@ -75,6 +82,89 @@ class Constants {
           ),
         );
       },
+    );
+  }
+
+//_________________________________snackbars______________________________________
+  showFailedSnackbar({required BuildContext context, required String message}) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+           
+            Text(
+              message,
+              style: const TextStyle(
+                color: Constants.COLOR_REDISH,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+            ),
+             const Icon(
+              Ionicons.alert_circle,
+              color: Constants.COLOR_REDISH,
+            ),
+          ],
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
+          side: BorderSide(
+            color: Constants.COLOR_REDISH,
+            width: 3,
+          ),
+        ),
+        dismissDirection: DismissDirection.horizontal,
+        backgroundColor: Constants.COLOR_WHITE,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  showSucessSnackbar({required BuildContext context, required String message}) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+          
+            Text(
+              message,
+              style: const TextStyle(
+                color: Constants.COLOR_GREENISH,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+            ),
+              const Icon(
+              Ionicons.happy,
+              color: Constants.COLOR_GREENISH,
+            ),
+          ],
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
+          side: BorderSide(
+            color: Constants.COLOR_GREENISH,
+            width: 3,
+          ),
+        ),
+        dismissDirection: DismissDirection.horizontal,
+        backgroundColor: Constants.COLOR_WHITE,
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 }

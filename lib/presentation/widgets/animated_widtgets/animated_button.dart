@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:project_2/presentation/widgets/constants/constants.dart';
 
 class AnimatedButton extends StatefulWidget {
-  const AnimatedButton({
-    super.key,
-    required this.cwidget,
-    required this.onTap,
-     this.height=50,
-     this.width=50,
-  });
+  const AnimatedButton(
+      {super.key,
+      required this.cwidget,
+      required this.onTap,
+      this.height = 50,
+      this.width = 50,
+      this.isLoading = false});
   final Widget cwidget;
   final Function onTap;
   final double height;
   final double width;
+  final bool isLoading;
 
   @override
   State<AnimatedButton> createState() => _AnimatedButtonState();
@@ -49,7 +50,21 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                       ),
                     ]
                   : null),
-          child: Center(child: widget.cwidget),
+          child: Center(
+            child: AnimatedSwitcher(
+            switchInCurve: Curves.easeInOutBack,
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(scale: animation ,child: child,);
+              },
+              duration: const Duration(milliseconds: 250),
+              child: widget.isLoading
+                  ? Padding(
+                      key: UniqueKey(),
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Constants.CIRCULARINDICATOR_BLACK)
+                  : widget.cwidget,
+            ),
+          ),
         ),
       ),
     );

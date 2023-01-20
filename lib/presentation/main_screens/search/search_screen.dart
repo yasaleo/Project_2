@@ -6,8 +6,8 @@ import 'package:project_2/data_layer/repositeries/repositories.dart';
 
 import '../../../data_layer/model/search_model.dart';
 import '../../widgets/constants/constants.dart';
-import '../../widgets/animated_follow_button.dart';
-import '../../widgets/custom_cached_image.dart';
+import '../../widgets/animated_widtgets/animated_follow_button.dart';
+import '../../widgets/non_animated_widgets/custom_cached_image.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

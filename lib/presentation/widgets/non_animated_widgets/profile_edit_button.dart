@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'constants/constants.dart';
+import '../constants/constants.dart';
 
 class ProfileEditButton extends StatelessWidget {
   const ProfileEditButton({

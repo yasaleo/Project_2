@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'constants/constants.dart';
+import '../constants/constants.dart';
 
 class OtpFeild extends StatelessWidget {
   const OtpFeild(

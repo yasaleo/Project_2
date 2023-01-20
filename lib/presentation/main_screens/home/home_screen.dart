@@ -4,10 +4,10 @@ import 'package:ionicons/ionicons.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/presentation/widgets/constants/constants.dart';
 import 'package:project_2/presentation/main_screens/add_post/add_post.dart';
-import 'package:project_2/presentation/widgets/post_card_widget.dart';
+import 'package:project_2/presentation/widgets/non_animated_widgets/post_card_widget.dart';
 import 'package:rive/rive.dart';
 import '../../../data_layer/model/get_post_model.dart';
-import '../../widgets/shimmer_widget.dart';
+import '../../widgets/animated_widtgets/shimmer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/presentation/widgets/text_widgets.dart';
+import 'package:project_2/presentation/widgets/non_animated_widgets/text_widgets.dart';
 
-import 'constants/constants.dart';
+import '../constants/constants.dart';
 
 class CustomTextfeild extends StatelessWidget {
   const CustomTextfeild({
@@ -13,7 +13,7 @@ class CustomTextfeild extends StatelessWidget {
     this.onchanged,
     this.controller,
     this.validator,
-    this.obscureText = false,
+    this.isObscure = false,
   }) : super(key: key);
 
   final String hintText;
@@ -25,7 +25,7 @@ class CustomTextfeild extends StatelessWidget {
 
   final TextEditingController? controller;
   final String heading;
-  final bool obscureText;
+  final bool isObscure;
   
 
   @override
@@ -56,7 +56,7 @@ class CustomTextfeild extends StatelessWidget {
               height: 100,
               width: 350,
               child: TextFormField(
-                
+                autofocus: false,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   return validator!(value!);
@@ -66,7 +66,9 @@ class CustomTextfeild extends StatelessWidget {
                 },
                 controller: controller,
                 focusNode: focusnode,
-                obscureText: obscureText,
+                obscureText: isObscure,
+                obscuringCharacter: "᰽",
+
                 decoration: InputDecoration(
                     errorStyle: const TextStyle(
                       color: Constants.COLOR_REDISH,

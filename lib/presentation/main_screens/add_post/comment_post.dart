@@ -4,10 +4,10 @@ import 'package:ionicons/ionicons.dart';
 import '../../../data_layer/model/get_comment.dart';
 import '../../../data_layer/repositeries/repositories.dart';
 import '../../widgets/constants/constants.dart';
-import '../../widgets/custom_cached_image.dart';
+import '../../widgets/non_animated_widgets/custom_cached_image.dart';
 
 class CommentButton extends StatefulWidget {
-  CommentButton({
+  const CommentButton({
     Key? key,
     required this.id,
   }) : super(key: key);
@@ -117,9 +117,7 @@ class _CommentButtonState extends State<CommentButton> {
                                             comment: commentController.text);
 
                                         commentController.clear();
-                                       setState(() {
-                                         
-                                       });
+                                        setState(() {});
                                       }
                                     },
                                     icon: const Icon(
@@ -187,7 +185,7 @@ class _CommentButtonState extends State<CommentButton> {
                                   ),
                                 );
                               }
-                              return Constants.CIRCULARINDICATOR;
+                              return Constants.CIRCULARINDICATOR_WHITE;
                             },
                           ),
                         ),

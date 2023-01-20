@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:project_2/data_layer/repositeries/repositories.dart';
 import 'package:project_2/data_layer/model/logged_user_details.dart';
 import 'package:project_2/presentation/widgets/constants/constants.dart';
-import 'package:project_2/presentation/followers_list/followers_list_screen.dart';
-import 'package:project_2/presentation/widgets/text_widgets.dart';
+import 'package:project_2/presentation/main_screens/profile/followers_list/followers_list_screen.dart';
+import 'package:project_2/presentation/widgets/non_animated_widgets/text_widgets.dart';
 
 import '../../../data_layer/model/logged_user_postlist.dart';
-import '../../following_list/following_list_screen.dart';
-import '../../widgets/custom_cached_image.dart';
-import '../../widgets/profile_edit_button.dart';
+import 'following_list/following_list_screen.dart';
+import '../../widgets/non_animated_widgets/custom_cached_image.dart';
+import '../../widgets/non_animated_widgets/profile_edit_button.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({
@@ -57,12 +57,12 @@ class ProfileScreen extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.active ||
                   snapshot.connectionState == ConnectionState.waiting) {
-                return Constants.CIRCULARINDICATOR;
+                return Constants.CIRCULARINDICATOR_WHITE;
               }
               if (snapshot.error == true) {
-                return Constants.CIRCULARINDICATOR;
+                return Constants.CIRCULARINDICATOR_WHITE;
               }
-              return Constants.CIRCULARINDICATOR;
+              return Constants.CIRCULARINDICATOR_WHITE;
             }),
       ),
     );
@@ -98,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
               itemCount: posts.length,
             );
           }
-          return Constants.CIRCULARINDICATOR;
+          return Constants.CIRCULARINDICATOR_WHITE;
         });
   }
 

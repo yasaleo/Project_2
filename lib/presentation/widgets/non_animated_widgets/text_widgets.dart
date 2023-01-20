@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants/constants.dart';
+import '../constants/constants.dart';
 
 class TextBold extends StatelessWidget {
   const TextBold({

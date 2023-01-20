@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:project_2/presentation/authentication/login/signin_screen.dart';
+import 'package:project_2/presentation/splash_screen/splash_screen.dart';
+
+
 import 'buisiness_logic/Login/login_bloc.dart';
 import 'data_layer/dependancy_injection/injectable.dart';
 import 'data_layer/repositeries/repositories.dart';
-import 'presentation/authentication/login/signin_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await configureInjection();
 
   runApp(const MyApp());
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
               colorSchemeSeed: Colors.white,
               useMaterial3: true,
               fontFamily: 'Source Code Pro Regular'),
-          home: const SigninScreen(),
+          home: const SplashScreen(),
         ),
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../data_layer/model/likes_model.dart';
-import '../../data_layer/repositeries/repositories.dart';
-import 'constants/constants.dart';
+import '../../../data_layer/model/likes_model.dart';
+import '../../../data_layer/repositeries/repositories.dart';
+import '../constants/constants.dart';
 
 class LikeButton extends StatefulWidget {
   const LikeButton({
