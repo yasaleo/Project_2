@@ -1,54 +1,37 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
-class CustomSlideAnimation extends StatefulWidget {
+class CustomSlideAnimation extends StatelessWidget {
   const CustomSlideAnimation(
-      {super.key, required this.child, required this.intialInteval});
+      {super.key,
+      required this.child,
+      required this.intialInteval,
+      required this.animation});
   final Widget child;
   final double intialInteval;
+  final Animation<double> animation;
 
-  @override
-  State<CustomSlideAnimation> createState() => _CustomSlideAnimationState();
-}
-
-class _CustomSlideAnimationState extends State<CustomSlideAnimation>
-    with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<Offset> animation;
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    animation =
-        Tween<Offset>(begin: const Offset(-1.6, 0), end: const Offset(0, 0))
-            .animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Interval(widget.intialInteval, 1, curve: Curves.linearToEaseOut),
-      ),
-    );
-    _animationController.forward();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+   
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) {
         return SlideTransition(
-          position: animation,
+          position:
+              Tween<Offset>(begin: const Offset(2, 0), end: const Offset(0, 0))
+                  .animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Interval(intialInteval, 1, curve: Curves.easeOutCubic),
+            ),
+          ),
           child: child,
         );
       },
-      child: widget.child,
+      child: child,
     );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 }

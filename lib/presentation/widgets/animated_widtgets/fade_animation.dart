@@ -26,7 +26,6 @@ class _CustomFadeAnimationState extends State<CustomFadeAnimation>
     );
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
-   
 
     _animationController.forward();
     super.initState();

@@ -113,88 +113,84 @@ class _SigninScreenState extends State<SigninScreen> {
             Positioned(
               top: desize.height * 2.9 / 10,
               left: desize.width * .18 / 10,
-              child: CustomSlideAnimation(
-                intialInteval: .2,
-                child: NeubrutContainer(
-                  height: desize.height * 2.95 / 10,
-                  width: desize.width * 9.6 / 10,
-                  color: Constants.COLOR_BLUE,
-                  child: Form(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    key: formkey,
-                    child: ListView(
-                      padding: const EdgeInsets.all(8),
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        const SizedBox(
-                          height: 10,
+              child: NeubrutContainer(
+                height: desize.height * 2.95 / 10,
+                width: desize.width * 9.6 / 10,
+                color: Constants.COLOR_BLUE,
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: formkey,
+                  child: ListView(
+                    padding: const EdgeInsets.all(8),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextfeild(
+                        heading: "Email",
+                        hintText: "eg:name123@gmail.com",
+                        controller: emailcontroller,
+                        icon: const Icon(
+                          Ionicons.mail,
+                          size: 28,
+                          color: Constants.COLOR_BLACK,
                         ),
-                        CustomTextfeild(
-                          heading: "Email",
-                          hintText: "eg:name123@gmail.com",
-                          controller: emailcontroller,
-                          icon: const Icon(
-                            Ionicons.mail,
-                            size: 28,
-                            color: Constants.COLOR_BLACK,
-                          ),
-                          focusnode: emailFocusnode,
-                          onchanged: (value) {
-                            numLook?.change(value!.length.toDouble());
-                          },
-                          validator: (value) {
-                            if (value.isEmpty ||
-                                !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(value)) {
-                              return "Enter a valid email";
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        ValueListenableBuilder(
-                            valueListenable: isObscureNotifier,
-                            builder:
-                                (BuildContext context, bool isObscure, _) {
-                              return CustomTextfeild(
-                                isObscure: isObscure,
-                                heading: "Password",
-                                hintText: "Enter a strong password",
-                                controller: passwordcontroller,
-                                focusnode: passwordFocusnode,
-                                onchanged: (value) {},
-                                icon: GestureDetector(
-                                  onTap: () {
-                                    isObscureNotifier.value =
-                                        !isObscureNotifier.value;
-              
-                                    isHandsUp!.change(!isObscure);
-                                  },
-                                  child: Icon(
-                                    isObscure
-                                        ? Ionicons.eye_off_outline
-                                        : Ionicons.eye_outline,
-                                    size: 28,
-                                    color: Constants.COLOR_BLACK,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty || value.length < 6) {
-                                    return "contains atleast 6 charcters";
-                                  }
+                        focusnode: emailFocusnode,
+                        onchanged: (value) {
+                          numLook?.change(value!.length.toDouble());
+                        },
+                        validator: (value) {
+                          if (value.isEmpty ||
+                              !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                            return "Enter a valid email";
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ValueListenableBuilder(
+                          valueListenable: isObscureNotifier,
+                          builder: (BuildContext context, bool isObscure, _) {
+                            return CustomTextfeild(
+                              isObscure: isObscure,
+                              heading: "Password",
+                              hintText: "Enter a strong password",
+                              controller: passwordcontroller,
+                              focusnode: passwordFocusnode,
+                              onchanged: (value) {},
+                              icon: GestureDetector(
+                                onTap: () {
+                                  isObscureNotifier.value =
+                                      !isObscureNotifier.value;
+
+                                  isHandsUp!.change(!isObscure);
                                 },
-                              );
-                            }),
-                        viewinsects.bottom == 0
-                            ? const SizedBox()
-                            : SizedBox(
-                                height: viewinsects.bottom *
-                                    (viewinsects.bottom / 160) /
-                                    10,
-                              )
-                      ],
-                    ),
+                                child: Icon(
+                                  isObscure
+                                      ? Ionicons.eye_off_outline
+                                      : Ionicons.eye_outline,
+                                  size: 28,
+                                  color: Constants.COLOR_BLACK,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty || value.length < 6) {
+                                  return "contains atleast 6 charcters";
+                                }
+                              },
+                            );
+                          }),
+                      viewinsects.bottom == 0
+                          ? const SizedBox()
+                          : SizedBox(
+                              height: viewinsects.bottom *
+                                  (viewinsects.bottom / 160) /
+                                  10,
+                            )
+                    ],
                   ),
                 ),
               ),
@@ -211,8 +207,13 @@ class _SigninScreenState extends State<SigninScreen> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
-                        CustomPageRoute()
-                            .animatedRouteBuilder(widget: SignupScreen()),
+                        CustomPageRoute().animatedRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  SignupScreen(
+                                    animation: animation,
+                                  ),
+                        ),
                       );
                     },
                     style: TextButton.styleFrom(),
@@ -234,17 +235,14 @@ class _SigninScreenState extends State<SigninScreen> {
               left: desize.width * 1 / 10,
               child: CustomFadeAnimation(
                 child: SizedBox(
-                  child: CustomSlideAnimation(
-                    intialInteval: .4,
-                    child: SigninButton(
-                      desize: desize,
-                      trigFail: trigFail,
-                      trigSuccess: trigSuccess,
-                      isHandsUp: isHandsUp,
-                      formkey: formkey,
-                      emailcontroller: emailcontroller,
-                      passwordcontroller: passwordcontroller,
-                    ),
+                  child: SigninButton(
+                    desize: desize,
+                    trigFail: trigFail,
+                    trigSuccess: trigSuccess,
+                    isHandsUp: isHandsUp,
+                    formkey: formkey,
+                    emailcontroller: emailcontroller,
+                    passwordcontroller: passwordcontroller,
                   ),
                 ),
               ),
