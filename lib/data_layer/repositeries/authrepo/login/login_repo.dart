@@ -16,7 +16,7 @@ class LoginRepo implements ILoginRepo {
       {required String email, required String password}) async {
     try {
       log("request called");
-      await Future.delayed(const Duration(milliseconds: 700));
+      await Future.delayed(const Duration(milliseconds: 2000));
 
       final response = await http.post(
           Uri.parse('${ApiRoutes.baseUrl}/auth/login'),

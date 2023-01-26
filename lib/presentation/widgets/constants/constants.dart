@@ -93,7 +93,6 @@ class Constants {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-           
             Text(
               message,
               style: const TextStyle(
@@ -102,7 +101,7 @@ class Constants {
                 fontSize: 18,
               ),
             ),
-             const Icon(
+            const Icon(
               Ionicons.alert_circle,
               color: Constants.COLOR_REDISH,
             ),
@@ -134,7 +133,6 @@ class Constants {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-          
             Text(
               message,
               style: const TextStyle(
@@ -143,7 +141,7 @@ class Constants {
                 fontSize: 18,
               ),
             ),
-              const Icon(
+            const Icon(
               Ionicons.happy,
               color: Constants.COLOR_GREENISH,
             ),

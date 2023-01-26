@@ -27,7 +27,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.onTap();
+        widget.isLoading ? null : widget.onTap();
       },
       child: Listener(
         onPointerUp: (event) => setState(() => iselvated = true),
@@ -44,17 +44,22 @@ class _AnimatedButtonState extends State<AnimatedButton> {
               borderRadius: Constants().BORDERCURVE,
               boxShadow: iselvated
                   ? [
-                      const BoxShadow(
-                        color: Constants.COLOR_BLACK,
-                        offset: Offset(6.5, 6.5),
+                      BoxShadow(
+                        color: widget.isLoading
+                            ? Colors.transparent
+                            : Constants.COLOR_BLACK,
+                        offset: const Offset(6.5, 6.5),
                       ),
                     ]
                   : null),
           child: Center(
             child: AnimatedSwitcher(
-            switchInCurve: Curves.easeInOutBack,
+              switchInCurve: Curves.easeInOutBack,
               transitionBuilder: (child, animation) {
-                return ScaleTransition(scale: animation ,child: child,);
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
               },
               duration: const Duration(milliseconds: 250),
               child: widget.isLoading

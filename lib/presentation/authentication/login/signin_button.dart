@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,26 +34,18 @@ class SigninButton extends StatelessWidget {
       listener: (context, state) {
         final loginEither = state.loginOption.fold(() => null, (a) => a);
 
-        // log(state.loginOption.isNone().toString());
-        // log(state.loginOption.isSome().toString());
-
         if (loginEither!.isLeft()) {
           trigFail?.change(true);
 
           Constants().showFailedSnackbar(
               context: context, message: state.failure!.message);
         } else if (loginEither.isRight()) {
-          // log("enterd sucess");
-
           trigSuccess?.change(true);
           Constants().showSucessSnackbar(
               context: context, message: "Logged in sucessfully");
         }
       },
       listenWhen: (previous, current) {
-        log(previous.toString());
-        log(current.toString());
-
         return current.loginOption.isSome();
       },
       builder: (context, state) {
@@ -62,7 +53,7 @@ class SigninButton extends StatelessWidget {
           isLoading: state.isLoading,
           width: desize.width * 8 / 10,
           cwidget: TextSemiBold(
-            key: UniqueKey(),
+            key: Key(state.isLoading.toString()),
             content: "Login",
             fontsize: 24,
           ),
