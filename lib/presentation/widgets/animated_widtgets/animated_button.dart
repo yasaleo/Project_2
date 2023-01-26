@@ -54,20 +54,25 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   : null),
           child: Center(
             child: AnimatedSwitcher(
-              switchInCurve: Curves.easeInOutBack,
+              switchInCurve: Curves.easeInOut,
+              switchOutCurve: Curves.easeOutSine,
               transitionBuilder: (child, animation) {
-                return ScaleTransition(
-                  scale: animation,
+                return FadeTransition(
+                  opacity: animation,
                   child: child,
                 );
               },
-              duration: const Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 500),
+              reverseDuration: const Duration(milliseconds: 800),
               child: widget.isLoading
-                  ? Padding(
-                      key: UniqueKey(),
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Constants.CIRCULARINDICATOR_BLACK)
-                  : widget.cwidget,
+                  ? Center(
+                      key: Key(widget.isLoading.toString()),
+                      child: Constants.LINEARINDICATOR_BLACK,
+                    )
+                  : Center(
+                      key: Key(widget.isLoading.toString()),
+                      child: widget.cwidget,
+                    ),
             ),
           ),
         ),

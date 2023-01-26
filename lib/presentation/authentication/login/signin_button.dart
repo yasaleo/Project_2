@@ -52,8 +52,8 @@ class SigninButton extends StatelessWidget {
         return AnimatedButton(
           isLoading: state.isLoading,
           width: desize.width * 8 / 10,
-          cwidget: TextSemiBold(
-            key: Key(state.isLoading.toString()),
+          cwidget: const TextSemiBold(
+            // key: Key(state.isLoading.toString()),
             content: "Login",
             fontsize: 24,
           ),

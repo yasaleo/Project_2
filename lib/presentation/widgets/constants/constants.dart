@@ -55,6 +55,14 @@ class Constants {
     ),
   );
 
+  //_____________________linearprogress-indicator______________________
+
+
+  static const LINEARINDICATOR_BLACK = LinearProgressIndicator(
+    color: Constants.COLOR_BLACK,
+    minHeight: 6,
+  );
+
   //______________________Acess Token___________________________
   static String ACCESSTOKEN =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzYzQwOTA3MzEzNjc5NTA2M2JhN2I2YSJ9LCJpYXQiOjE2NzM3OTE3NTEsImV4cCI6MTY3Mzg3ODE1MX0.wLO41NijdGVAb72llRzGn2JwWOTURYuDoMEn5MXaysY';
